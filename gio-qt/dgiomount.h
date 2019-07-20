@@ -8,20 +8,27 @@ namespace Gio {
 class Mount;
 }
 
+class DGioVolume;
 class DGioMountPrivate;
 class DGioMount : public QObject, public QSharedData
 {
     Q_OBJECT
 public:
-    explicit DGioMount(Gio::Mount *gmountPtr, QObject *parent = nullptr);
+    explicit DGioMount(Gio::Mount *gmmMountPtr, QObject *parent = nullptr);
     ~DGioMount();
 
     static DGioMount * createFromPath(QString path, QObject *parent = nullptr);
 
     QString name() const;
     QString uuid() const;
+    bool isShadowed() const;
     bool canUnmount() const;
     bool canEject() const;
+    QStringList themedIconNames() const;
+
+    void unmount(bool forceUnmount = false);
+
+    QExplicitlySharedDataPointer<DGioVolume> getVolume();
 
 private:
     QScopedPointer<DGioMountPrivate> d_ptr;

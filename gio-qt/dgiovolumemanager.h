@@ -4,10 +4,6 @@
 #include <QExplicitlySharedDataPointer>
 #include <QObject>
 
-namespace Gio {
-class Mount;
-}
-
 class DGioMount;
 class DGioVolume;
 class DGioVolumeManagerPrivate;
@@ -18,7 +14,14 @@ public:
     explicit DGioVolumeManager(QObject *parent = nullptr);
     ~DGioVolumeManager();
 
-    const QList<QExplicitlySharedDataPointer<DGioMount> > getMounts();
+    static const QList<QExplicitlySharedDataPointer<DGioMount> > getMounts();
+    static const QList<QExplicitlySharedDataPointer<DGioVolume> > getVolumes();
+
+Q_SIGNALS:
+    void mountAdded(QExplicitlySharedDataPointer<DGioMount> mount);
+    void mountRemoved(QExplicitlySharedDataPointer<DGioMount> mount);
+    void mountPreRemoved(QExplicitlySharedDataPointer<DGioMount> mount);
+    void mountChanged(QExplicitlySharedDataPointer<DGioMount> mount);
 
 private:
     QScopedPointer<DGioVolumeManagerPrivate> d_ptr;

@@ -4,12 +4,14 @@ set (QGIO_PUBLIC_HEADER_FILES
     dgiovolumemanager.h
     dgiomount.h
     dgiovolume.h
+    dgiofile.h
 )
 
 set (QGIO_PRIVATE_CPP_FILES
     dgiovolumemanager.cpp
     dgiomount.cpp
     dgiovolume.cpp
+    dgiofile.cpp
 )
 
 # Library
