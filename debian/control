@@ -7,7 +7,7 @@ Build-Depends:
  cmake,
  pkg-config,
  qt5-default,
- libglib2.4-dev
+ libglibmm-2.4-dev
 Standards-Version: 3.9.8
 Homepage: https://github.com/linuxdeepin/gio-qt
 
