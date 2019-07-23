@@ -4,6 +4,15 @@ cmake_minimum_required(VERSION 3.9.5)
 
 option(BUILD_UTILS "Build utilities" ON)
 
+# Version
+if (NOT PROJECT_VERSION)
+    set(PROJECT_VERSION "0.0.1")
+endif()
+
+if (NOT PROJECT_VERSION_MAJOR)
+    set(PROJECT_VERSION_MAJOR 0)
+endif()
+
 # Find includes in corresponding build directories
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 # Instruct CMake to run moc automatically when needed

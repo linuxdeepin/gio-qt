@@ -1,10 +1,11 @@
-prefix=@DEST_DIR@
-libdir=${prefix}/lib
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=@CMAKE_INSTALL_PREFIX@
+libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
 includedir=${prefix}/include
 
 Name: gio-qt
 Description: Qt wrapper library for GIO.
-Version: 0.1.0
+Version: @PROJECT_VERSION@
 Requires: glibmm-2.4, Qt5Core
 
 Libs: -L${libdir} -lgio-qt

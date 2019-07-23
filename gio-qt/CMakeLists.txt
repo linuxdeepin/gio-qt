@@ -1,10 +1,7 @@
 # Populate a CMake variable with the sources
 # TODO: portable headers?
 
-# Some custom variables
-set(DEST_DIR "${CMAKE_INSTALL_PREFIX}")
-
-CONFIGURE_FILE("gio-qt.pc.in" "gio-qt.pc" @ONLY)
+configure_file ("gio-qt.pc.in" "gio-qt.pc" @ONLY)
 
 set (QGIO_PUBLIC_HEADER_FILES
     dgiovolumemanager.h
@@ -30,6 +27,12 @@ add_library (gio-qt SHARED
     ${QGIO_PRIVATE_CPP_FILES}
 )
 
+set_target_properties(
+    gio-qt PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+)
+
 target_include_directories(gio-qt
 PRIVATE
     ${GIOMM_INCLUDE_DIRS}
@@ -48,7 +51,7 @@ install (FILES ${QGIO_PUBLIC_HEADER_FILES}
     DESTINATION include/gio-qt
 )
 
-install (TARGETS gio-qt DESTINATION lib)
+install_targets ("/${CMAKE_INSTALL_LIBDIR}" gio-qt)
 
 install (FILES "${CMAKE_CURRENT_BINARY_DIR}/gio-qt.pc"
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig

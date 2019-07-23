@@ -1,0 +1,23 @@
+Source: gio-qt
+Section: libs
+Priority: optional
+Maintainer: Gary Wang <wzc782970009@gmail.com>
+Build-Depends:
+ debhelper (>= 9),
+ pkg-config,
+ qt5-default,
+ qt5-qmake,
+ libglib2.0-dev
+Standards-Version: 3.9.8
+Homepage: https://github.com/linuxdeepin/gio-qt
+
+Package: libgio-qt
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Gio wrapper for Qt.
+
+Package: libgio-qt-dev
+Architecture: any
+Depends: libgio-qt, ${misc:Depends}
+Description: Development package for libgio-qt.
+
