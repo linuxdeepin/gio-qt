@@ -16,11 +16,13 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     set(CMAKE_INSTALL_PREFIX /usr)
 endif ()
 
+include(GNUInstallDirs)
+
 # Find the QtWidgets library
 find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED Core)
 find_package(PkgConfig)
 
-pkg_check_modules(GIOMM giomm-2.4) # look into FindPkgConfig.cmake,
+pkg_check_modules(GIOMM giomm-2.4) # look into FindPkgConfig.cmake
 
 add_subdirectory (gio-qt)
 
