@@ -8,6 +8,7 @@ namespace Gio {
 class Mount;
 }
 
+class DGioFile;
 class DGioVolume;
 class DGioMountPrivate;
 class DGioMount : public QObject, public QSharedData
@@ -28,6 +29,8 @@ public:
 
     void unmount(bool forceUnmount = false);
 
+    QExplicitlySharedDataPointer<DGioFile> getRootFile();
+    QExplicitlySharedDataPointer<DGioFile> getDefaultLocationFile();
     QExplicitlySharedDataPointer<DGioVolume> getVolume();
 
 private:

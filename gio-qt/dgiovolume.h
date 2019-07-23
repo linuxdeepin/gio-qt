@@ -8,6 +8,7 @@ namespace Gio {
 class Volume;
 }
 
+class DGioMount;
 class DGioVolumePrivate;
 class DGioVolume : public QObject, public QSharedData
 {
@@ -17,6 +18,8 @@ public:
     ~DGioVolume();
 
     QString name() const;
+
+    QExplicitlySharedDataPointer<DGioMount> getMount();
 
 private:
     QScopedPointer<DGioVolumePrivate> d_ptr;

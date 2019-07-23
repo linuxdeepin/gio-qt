@@ -1,3 +1,4 @@
+#include "dgiomount.h"
 #include "dgiovolume.h"
 
 #include <glibmm/refptr.h>
@@ -12,7 +13,7 @@ class DGioVolumePrivate
 public:
     DGioVolumePrivate(DGioVolume *qq, Volume *gmmVolumePtr);
 
-    Glib::RefPtr<Mount> getGmmVolumeInstance() const;
+    Glib::RefPtr<Volume> getGmmVolumeInstance() const;
 
     QString name() const;
 
@@ -28,7 +29,12 @@ DGioVolumePrivate::DGioVolumePrivate(DGioVolume *qq, Volume *gmmVolumePtr)
     : m_gmmVolumePtr(gmmVolumePtr)
     , q_ptr(qq)
 {
-//    m_gvolumePtr = Glib::wrap(gvolumePtr);
+    //    m_gvolumePtr = Glib::wrap(gvolumePtr);
+}
+
+Glib::RefPtr<Volume> DGioVolumePrivate::getGmmVolumeInstance() const
+{
+    return m_gmmVolumePtr;
 }
 
 QString DGioVolumePrivate::name() const
@@ -56,4 +62,15 @@ QString DGioVolume::name() const
     Q_D(const DGioVolume);
 
     return d->name();
+}
+
+// Return value can be nullptr
+QExplicitlySharedDataPointer<DGioMount> DGioVolume::getMount()
+{
+    Q_D(DGioVolume);
+
+    Glib::RefPtr<Mount> mnt = d->getGmmVolumeInstance()->get_mount();
+    QExplicitlySharedDataPointer<DGioMount> mntPtr(new DGioMount(mnt.release()));
+
+    return mntPtr;
 }

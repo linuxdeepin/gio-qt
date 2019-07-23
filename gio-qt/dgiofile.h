@@ -8,6 +8,7 @@ namespace Gio {
 class File;
 }
 
+class DGioFileInfo;
 class DGioFilePrivate;
 class DGioFile : public QObject, public QSharedData
 {
@@ -21,6 +22,7 @@ public:
     QString basename() const;
     QString path() const;
     QString uri() const;
+    QExplicitlySharedDataPointer<DGioFileInfo> createFileSystemInfo();
 
 private:
     QScopedPointer<DGioFilePrivate> d_ptr;

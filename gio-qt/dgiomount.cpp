@@ -1,5 +1,6 @@
 #include "dgiomount.h"
 #include "dgiovolume.h"
+#include "dgiofile.h"
 
 #include <glibmm/refptr.h>
 
@@ -198,13 +199,36 @@ void DGioMount::unmount(bool forceUnmount)
     return d->getGmmMountInstance()->unmount(forceUnmount ? MOUNT_UNMOUNT_FORCE : MOUNT_UNMOUNT_NONE);
 }
 
+QExplicitlySharedDataPointer<DGioFile> DGioMount::getRootFile()
+{
+    Q_D(const DGioMount);
+
+    Glib::RefPtr<File> file = d->getGmmMountInstance()->get_root();
+    QExplicitlySharedDataPointer<DGioFile> filePtr(new DGioFile(file.release()));
+
+    return filePtr;
+}
+
+QExplicitlySharedDataPointer<DGioFile> DGioMount::getDefaultLocationFile()
+{
+    Q_D(const DGioMount);
+
+    Glib::RefPtr<File> file = d->getGmmMountInstance()->get_default_location();
+    QExplicitlySharedDataPointer<DGioFile> filePtr(new DGioFile(file.release()));
+
+    return filePtr;
+}
+
 QExplicitlySharedDataPointer<DGioVolume> DGioMount::getVolume()
 {
     Q_D(const DGioMount);
 
     Glib::RefPtr<Volume> vol = d->getGmmMountInstance()->get_volume();
-    QExplicitlySharedDataPointer<DGioVolume> volPtr(new DGioVolume(vol.release()));
+    if (vol) {
+        QExplicitlySharedDataPointer<DGioVolume> volPtr(new DGioVolume(vol.release()));
+        return volPtr;
+    }
 
-    return volPtr;
+    return QExplicitlySharedDataPointer<DGioVolume>(nullptr);
 }
 

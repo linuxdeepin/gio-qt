@@ -1,9 +1,12 @@
 #include "dgiofile.h"
+#include "dgiofileinfo.h"
 
 #include <glibmm/refptr.h>
 
 #include <giomm/init.h>
 #include <giomm/file.h>
+
+#include <QDebug>
 
 using namespace Gio;
 
@@ -69,6 +72,7 @@ DGioFile *DGioFile::createFromPath(QString path, QObject *parent)
     // ensure GIO got initialized
     Gio::init();
 
+    // File::create_for_path never falls.
     Glib::RefPtr<File> gmmFile = File::create_for_path(path.toStdString());
 
     return new DGioFile(gmmFile.release(), parent);
@@ -93,4 +97,21 @@ QString DGioFile::uri() const
     Q_D(const DGioFile);
 
     return d->uri();
+}
+
+QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileSystemInfo()
+{
+    Q_D(DGioFile);
+
+    try {
+        Glib::RefPtr<FileInfo> gmmFileInfo = d->getGmmFileInstance()->query_filesystem_info("filesystem::*");
+        if (gmmFileInfo) {
+            QExplicitlySharedDataPointer<DGioFileInfo> fileInfoPtr(new DGioFileInfo(gmmFileInfo.release()));
+            return fileInfoPtr;
+        }
+    } catch (Glib::Error error) {
+        qDebug() << QString::fromStdString(error.what().raw());
+    }
+
+    return QExplicitlySharedDataPointer<DGioFileInfo>(nullptr);
 }

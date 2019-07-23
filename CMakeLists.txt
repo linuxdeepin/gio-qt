@@ -11,11 +11,16 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_CXX_FLAGS "-g -Wall")
 set(QT_MINIMUM_VERSION "5.6.3")
 
+# Install settings
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    set(CMAKE_INSTALL_PREFIX /usr)
+endif ()
+
 # Find the QtWidgets library
 find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED Core)
 find_package(PkgConfig)
 
-pkg_check_modules(GTKMM gtkmm-3.0) # look into FindPkgConfig.cmake, 
+pkg_check_modules(GIOMM giomm-2.4) # look into FindPkgConfig.cmake,
 
 add_subdirectory (gio-qt)
 

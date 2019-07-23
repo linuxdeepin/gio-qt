@@ -2,16 +2,20 @@
 # TODO: portable headers?
 set (QGIO_PUBLIC_HEADER_FILES
     dgiovolumemanager.h
+    dgiomountoperation.h
     dgiomount.h
     dgiovolume.h
     dgiofile.h
+    dgiofileinfo.h
 )
 
 set (QGIO_PRIVATE_CPP_FILES
     dgiovolumemanager.cpp
+    dgiomountoperation.cpp
     dgiomount.cpp
     dgiovolume.cpp
     dgiofile.cpp
+    dgiofileinfo.cpp
 )
 
 # Library
@@ -22,7 +26,7 @@ add_library (gio-qt STATIC
 
 target_include_directories(gio-qt
 PRIVATE
-    ${GTKMM_INCLUDE_DIRS}
+    ${GIOMM_INCLUDE_DIRS}
 PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}
 )

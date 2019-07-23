@@ -85,6 +85,7 @@ void DGioVolumeManagerPrivate::slot_mountChanged(const Glib::RefPtr<Mount> &gmmM
     Q_EMIT q->mountChanged(mount);
 }
 
+// -------------------------------------------------------------
 
 DGioVolumeManager::DGioVolumeManager(QObject *parent)
     : QObject(parent)
