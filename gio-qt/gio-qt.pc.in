@@ -1,12 +1,11 @@
 prefix=@DEST_DIR@
-exec_prefix=${prefix}
 libdir=${prefix}/lib
 includedir=${prefix}/include
 
 Name: gio-qt
 Description: Qt wrapper library for GIO.
-Version: 1.0
-Requires: glibmm-2.4
+Version: 0.1.0
+Requires: glibmm-2.4, Qt5Core
 
 Libs: -L${libdir} -lgio-qt
-Cflags: -I${includedir} -I{includedir}/gio-qt
+Cflags: -I${includedir} -I${includedir}/gio-qt

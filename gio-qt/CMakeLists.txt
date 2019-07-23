@@ -25,7 +25,7 @@ set (QGIO_PRIVATE_CPP_FILES
 )
 
 # Library
-add_library (gio-qt STATIC
+add_library (gio-qt SHARED
     ${QGIO_PUBLIC_HEADER_FILES}
     ${QGIO_PRIVATE_CPP_FILES}
 )
