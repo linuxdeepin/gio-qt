@@ -65,6 +65,8 @@ DGioFile::~DGioFile()
  * This operation never fails since Gio::File::create_for_path never fails, but the returned
  * object might not support any I/O operation if path is malformed.
  *
+ * Caller take the ownership of the created object, you can also provide a \a parent object.
+ *
  * \return the created DGioFile instance
  */
 DGioFile *DGioFile::createFromPath(QString path, QObject *parent)
@@ -74,6 +76,27 @@ DGioFile *DGioFile::createFromPath(QString path, QObject *parent)
 
     // File::create_for_path never falls.
     Glib::RefPtr<File> gmmFile = File::create_for_path(path.toStdString());
+
+    return new DGioFile(gmmFile.release(), parent);
+}
+
+/*!
+ * \brief Create a DGioFile instance by given \a uri
+ *
+ * This operation never fails since Gio::File::create_for_uri never fails, but the returned
+ * object might not support any I/O operation if uri is malformed.
+ *
+ * Caller take the ownership of the created object, you can also provide a \a parent object.
+ *
+ * \return the created DGioFile instance
+ */
+DGioFile *DGioFile::createFromUri(QString uri, QObject *parent)
+{
+    // ensure GIO got initialized
+    Gio::init();
+
+    // File::create_for_path never falls.
+    Glib::RefPtr<File> gmmFile = File::create_for_uri(uri.toStdString());
 
     return new DGioFile(gmmFile.release(), parent);
 }

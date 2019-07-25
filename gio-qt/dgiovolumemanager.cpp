@@ -22,6 +22,9 @@ private:
     void slot_mountRemoved(const Glib::RefPtr< Mount >& gmmMount);
     void slot_mountPreRemoved(const Glib::RefPtr< Mount >& gmmMount);
     void slot_mountChanged(const Glib::RefPtr< Mount >& gmmMount);
+    void slot_volumeAdded(const Glib::RefPtr< Volume >& gmmVolume);
+    void slot_volumeRemoved(const Glib::RefPtr< Volume >& gmmVolume);
+    void slot_volumeChanged(const Glib::RefPtr< Volume >& gmmVolume);
 
     Q_DECLARE_PUBLIC(DGioVolumeManager)
 };
@@ -39,6 +42,10 @@ DGioVolumeManagerPrivate::DGioVolumeManagerPrivate(DGioVolumeManager *qq)
     m_gmmVolumeMonitorPtr->signal_mount_removed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountRemoved));
     m_gmmVolumeMonitorPtr->signal_mount_pre_unmount().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountPreRemoved));
     m_gmmVolumeMonitorPtr->signal_mount_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountChanged));
+
+    m_gmmVolumeMonitorPtr->signal_volume_added().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeAdded));
+    m_gmmVolumeMonitorPtr->signal_volume_removed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeRemoved));
+    m_gmmVolumeMonitorPtr->signal_volume_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeChanged));
 }
 
 void DGioVolumeManagerPrivate::slot_mountAdded(const Glib::RefPtr<Mount> &gmmMount)
@@ -83,6 +90,39 @@ void DGioVolumeManagerPrivate::slot_mountChanged(const Glib::RefPtr<Mount> &gmmM
     QExplicitlySharedDataPointer<DGioMount> mount(new DGioMount(copy.release()));
 
     Q_EMIT q->mountChanged(mount);
+}
+
+void DGioVolumeManagerPrivate::slot_volumeAdded(const Glib::RefPtr<Volume> &gmmVolume)
+{
+    Q_Q(DGioVolumeManager);
+
+    Glib::RefPtr<Volume> copy(gmmVolume);
+
+    QExplicitlySharedDataPointer<DGioVolume> volume(new DGioVolume(copy.release()));
+
+    Q_EMIT q->volumeAdded(volume);
+}
+
+void DGioVolumeManagerPrivate::slot_volumeRemoved(const Glib::RefPtr<Volume> &gmmVolume)
+{
+    Q_Q(DGioVolumeManager);
+
+    Glib::RefPtr<Volume> copy(gmmVolume);
+
+    QExplicitlySharedDataPointer<DGioVolume> volume(new DGioVolume(copy.release()));
+
+    Q_EMIT q->volumeRemoved(volume);
+}
+
+void DGioVolumeManagerPrivate::slot_volumeChanged(const Glib::RefPtr<Volume> &gmmVolume)
+{
+    Q_Q(DGioVolumeManager);
+
+    Glib::RefPtr<Volume> copy(gmmVolume);
+
+    QExplicitlySharedDataPointer<DGioVolume> volume(new DGioVolume(copy.release()));
+
+    Q_EMIT q->volumeChanged(volume);
 }
 
 // -------------------------------------------------------------
