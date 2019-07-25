@@ -22,6 +22,9 @@ Q_SIGNALS:
     void mountRemoved(QExplicitlySharedDataPointer<DGioMount> mount);
     void mountPreRemoved(QExplicitlySharedDataPointer<DGioMount> mount);
     void mountChanged(QExplicitlySharedDataPointer<DGioMount> mount);
+    void volumeAdded(QExplicitlySharedDataPointer<DGioVolume> volume);
+    void volumeRemoved(QExplicitlySharedDataPointer<DGioVolume> volume);
+    void volumeChanged(QExplicitlySharedDataPointer<DGioVolume> volume);
 
 private:
     QScopedPointer<DGioVolumeManagerPrivate> d_ptr;
