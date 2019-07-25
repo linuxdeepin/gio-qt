@@ -13,11 +13,15 @@ enum DGioAskPasswordFlag
 };
 Q_DECLARE_FLAGS(DGioAskPasswordFlags, DGioAskPasswordFlag)
 
+//! Indicated the mount operation result
+/*!
+ *  Wrapper of GMountOperationResult.
+ */
 enum DGioMountOperationResult
 {
-    MOUNT_OPERATION_HANDLED,
-    MOUNT_OPERATION_ABORTED,
-    MOUNT_OPERATION_UNHANDLED
+    MOUNT_OPERATION_HANDLED, /*!< The request was fulfilled and the user specified data is now available */
+    MOUNT_OPERATION_ABORTED, /*!< The user requested the mount operation to be aborted */
+    MOUNT_OPERATION_UNHANDLED /*!< The request was unhandled (i.e. not implemented) */
 };
 Q_ENUMS(DGioMountOperationResult);
 
