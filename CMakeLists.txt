@@ -3,7 +3,7 @@ project(gio-qt)
 cmake_minimum_required(VERSION 3.9.5)
 
 option(BUILD_UTILS "Build utilities" ON)
-option(BUILD_DOCS "Build documentation" ON)
+option(BUILD_DOCS "Build documentation" OFF)
 
 # Version
 if (NOT PROJECT_VERSION)
