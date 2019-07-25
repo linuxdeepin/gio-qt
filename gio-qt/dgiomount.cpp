@@ -61,7 +61,7 @@ DGioMount::DGioMount(Mount* gmmMountPtr, QObject *parent)
     : QObject(parent)
     , d_ptr(new DGioMountPrivate(this, gmmMountPtr))
 {
-    // gmountPtr must be vaild;
+    // gmountPtr must be valid;
     Q_CHECK_PTR(gmmMountPtr);
 }
 

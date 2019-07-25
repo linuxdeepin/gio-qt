@@ -48,7 +48,7 @@ DGioVolume::DGioVolume(Volume* gmmVolumePtr, QObject *parent)
     : QObject(parent)
     , d_ptr(new DGioVolumePrivate(this, gmmVolumePtr))
 {
-    // gvolumePtr must be vaild;
+    // gvolumePtr must be valid;
     Q_CHECK_PTR(gmmVolumePtr);
 }
 

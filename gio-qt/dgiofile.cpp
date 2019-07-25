@@ -50,7 +50,7 @@ DGioFile::DGioFile(File* gmmFilePtr, QObject *parent)
     : QObject(parent)
     , d_ptr(new DGioFilePrivate(this, gmmFilePtr))
 {
-    // gmountPtr must be vaild;
+    // gmountPtr must be valid;
     Q_CHECK_PTR(gmmFilePtr);
 }
 
@@ -95,7 +95,7 @@ DGioFile *DGioFile::createFromUri(QString uri, QObject *parent)
     // ensure GIO got initialized
     Gio::init();
 
-    // File::create_for_path never falls.
+    // File::create_for_uri never falls.
     Glib::RefPtr<File> gmmFile = File::create_for_uri(uri.toStdString());
 
     return new DGioFile(gmmFile.release(), parent);
