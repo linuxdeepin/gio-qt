@@ -86,7 +86,7 @@ DGioMount *DGioMount::createFromPath(QString path, QObject *parent)
         if (gmmMount) {
             return new DGioMount(gmmMount.release(), parent);
         }
-    } catch (Glib::Error error) {
+    } catch (const Glib::Error &error) {
         qDebug() << QString::fromStdString(error.what().raw());
     }
 

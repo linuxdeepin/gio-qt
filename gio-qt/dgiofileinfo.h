@@ -4,6 +4,17 @@
 #include <QObject>
 #include <QSharedData>
 
+enum DGioFileType {
+    FILE_TYPE_NOT_KNOWN,
+    FILE_TYPE_REGULAR,
+    FILE_TYPE_DIRECTORY,
+    FILE_TYPE_SYMBOLIC_LINK,
+    FILE_TYPE_SPECIAL,
+    FILE_TYPE_SHORTCUT,
+    FILE_TYPE_MOUNTABLE
+};
+Q_ENUMS(DGioFileType);
+
 namespace Gio {
 class FileInfo;
 }
@@ -16,8 +27,11 @@ public:
     explicit DGioFileInfo(Gio::FileInfo *gmmFileInfoInfoPtr, QObject *parent = nullptr);
     ~DGioFileInfo();
 
-    bool isReadOnly() const;
+    // file info
+    DGioFileType fileType() const;
 
+    // filesystem info.
+    bool fsReadOnly() const;
     quint64 fsTotalBytes() const;
     quint64 fsUsedBytes() const;
     quint64 fsFreeBytes() const;
