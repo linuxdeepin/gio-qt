@@ -3,6 +3,7 @@
 #include <QExplicitlySharedDataPointer>
 
 #include <dgiofile.h>
+#include <dgioutils.h>
 #include <dgiomount.h>
 #include <dgiovolume.h>
 #include <dgiovolumemanager.h>
@@ -10,6 +11,10 @@
 
 int main(int argc, char * argv[])
 {
+    qDebug() << DGioUtils::systemDataDirs();
+
+    qDebug() << "----------------------";
+
     DGioFile * f = DGioFile::createFromPath("/media/wzc/aaaaaaaaaaaaaaaa");
     if (f) {
         qDebug() << f->basename() << f->path() << f->uri();

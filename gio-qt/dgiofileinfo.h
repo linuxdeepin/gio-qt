@@ -28,6 +28,7 @@ public:
     ~DGioFileInfo();
 
     // file info
+    QString displayName() const;
     DGioFileType fileType() const;
 
     // filesystem info.
