@@ -60,7 +60,14 @@ DGioFileInfo::~DGioFileInfo()
 
 }
 
-bool DGioFileInfo::isReadOnly() const
+DGioFileType DGioFileInfo::fileType() const
+{
+    Q_D(const DGioFileInfo);
+
+    return static_cast<DGioFileType>(d->getGmmFileInfoInstance()->get_file_type());
+}
+
+bool DGioFileInfo::fsReadOnly() const
 {
     Q_D(const DGioFileInfo);
 

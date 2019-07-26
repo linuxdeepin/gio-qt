@@ -132,7 +132,7 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileSystemInfo()
             QExplicitlySharedDataPointer<DGioFileInfo> fileInfoPtr(new DGioFileInfo(gmmFileInfo.release()));
             return fileInfoPtr;
         }
-    } catch (Glib::Error error) {
+    } catch (const Glib::Error &error) {
         qDebug() << QString::fromStdString(error.what().raw());
     }
 
