@@ -1,9 +1,9 @@
 project(gio-qt)
 
-cmake_minimum_required(VERSION 3.9.5)
+cmake_minimum_required(VERSION 3.12.4)
 
 option(BUILD_UTILS "Build utilities" ON)
-option(BUILD_DOCS "Build documentation" OFF)
+option(BUILD_DOCS "Build documentation" ON)
 
 # Version
 if (NOT PROJECT_VERSION)
@@ -62,7 +62,7 @@ if (BUILD_DOCS)
         COMMENT "Generate documentation via Doxygen"
     )
 
-    install (DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/html DESTINATION share/doc)
+    install (FILES ${CMAKE_CURRENT_BINARY_DIR}/docs/gio-qt.qch DESTINATION share/qt5/doc)
 
 else ()
     message (STATUS "")
