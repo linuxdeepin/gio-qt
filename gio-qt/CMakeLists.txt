@@ -10,6 +10,7 @@ set (QGIO_PUBLIC_HEADER_FILES
     dgiovolume.h
     dgiofile.h
     dgiofileinfo.h
+    dgioutils.h
 )
 
 set (QGIO_PRIVATE_CPP_FILES
@@ -19,6 +20,7 @@ set (QGIO_PRIVATE_CPP_FILES
     dgiovolume.cpp
     dgiofile.cpp
     dgiofileinfo.cpp
+    dgioutils.cpp
 )
 
 # Library

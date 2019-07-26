@@ -60,6 +60,28 @@ DGioFileInfo::~DGioFileInfo()
 
 }
 
+/*!
+ * \brief Gets a display name for a file.
+ *
+ * A display name is guaranteed to be in UTF8 and can thus be displayed in the UI.
+ *
+ * Wrapper of Gio::FileInfo::get_display_name(), internally it returns the
+ * G_FILE_ATTRIBUTE_STANDARD_DISPLAY_NAME attribute value.
+ */
+QString DGioFileInfo::displayName() const
+{
+    Q_D(const DGioFileInfo);
+
+    return QString::fromStdString(d->getGmmFileInfoInstance()->get_display_name());
+}
+
+/*!
+ * \brief DGioFileInfo::fileType
+ *
+ * Wrapper of Gio::FileInfo::get_file_type(), internally it returns the
+ * G_FILE_ATTRIBUTE_STANDARD_TYPE attribute value.
+ * \return
+ */
 DGioFileType DGioFileInfo::fileType() const
 {
     Q_D(const DGioFileInfo);
