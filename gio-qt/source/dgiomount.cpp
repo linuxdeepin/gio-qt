@@ -11,6 +11,9 @@
 
 #include <QDebug>
 
+// private
+#include "dgiohelper.h"
+
 using namespace Gio;
 
 class DGioMountPrivate
@@ -150,71 +153,18 @@ QStringList DGioMount::themedIconNames() const
 {
     Q_D(const DGioMount);
 
-    QStringList iconNames;
-
     Glib::RefPtr<const Icon> icon = d->getGmmMountInstance()->get_icon();
-    Glib::RefPtr<const ThemedIcon> themedIcon = Glib::RefPtr<const ThemedIcon>::cast_dynamic(icon);
 
-//    if (G_IS_THEMED_ICON(themedIcon->gobj()) ) {
-//        qDebug() << "Yes and";
-//    }
-
-//    if (themedIcon) {
-//        qDebug() << "Yes";
-//    }
-
-    if (themedIcon) {
-        QStringList iconNames;
-        char **names;
-        char **iter;
-        names = NULL;
-        g_object_get(G_THEMED_ICON(themedIcon->gobj()), "names", &names, NULL);
-        for (iter = names; *iter; iter++) {
-            iconNames.append(QString(*iter));
-        }
-        g_strfreev(names);
-        return iconNames;
-    }
-
-//    return {QStringList::fromStdList(themedIcon->get_names())};
-
-//    char* name = 0;
-//    g_object_get(G_OBJECT(themedIcon->gobj()), "name", &name, NULL);
-//    return {QString(name)};
-
-//    if (themedIcon) {
-//        auto ustring_names = themedIcon->get_names();
-////        for (const Glib::ustring &str : ustring_names) {
-////            iconNames.append(QString::fromStdString(str.raw()));
-////        }
-//    }
-
-    return iconNames;
+    return DGioPrivate::getThemedIconNames(icon);
 }
 
 QStringList DGioMount::themedSymbolicIconNames() const
 {
     Q_D(const DGioMount);
 
-    QStringList iconNames;
-
     Glib::RefPtr<const Icon> icon = d->getGmmMountInstance()->get_symbolic_icon();
-    Glib::RefPtr<const ThemedIcon> themedIcon = Glib::RefPtr<const ThemedIcon>::cast_dynamic(icon);
 
-    if (themedIcon) {
-        QStringList iconNames;
-        char **names;
-        char **iter;
-        names = NULL;
-        g_object_get(G_THEMED_ICON(themedIcon->gobj()), "names", &names, NULL);
-        for (iter = names; *iter; iter++) {
-            iconNames.append(QString(*iter));
-        }
-        g_strfreev(names);
-        return iconNames;
-    }
-
-    return iconNames;
+    return DGioPrivate::getThemedIconNames(icon);
 }
 
 void DGioMount::unmount(bool forceUnmount)
