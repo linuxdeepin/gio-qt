@@ -1,10 +1,12 @@
 #include "dgiofile.h"
 #include "dgiofileinfo.h"
+#include "dgiofileiterator.h"
 
 #include <glibmm/refptr.h>
 
 #include <giomm/init.h>
 #include <giomm/file.h>
+#include <giomm/fileenumerator.h>
 
 #include <QDebug>
 
@@ -122,6 +124,13 @@ QString DGioFile::uri() const
     return d->uri();
 }
 
+/*!
+ * \brief Obtains information about the filesystem the file is on.
+ *
+ * Wrapper of Gio::File::query_filesystem_info("filesystem::*").
+ *
+ * \return the created file system info object, or nullptr if create failed.
+ */
 QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileSystemInfo()
 {
     Q_D(DGioFile);
@@ -137,4 +146,38 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileSystemInfo()
     }
 
     return QExplicitlySharedDataPointer<DGioFileInfo>(nullptr);
+}
+
+/*!
+ * \brief Gets the requested information about the files in a directory.
+ *
+ * Wrapper of Gio::File::enumerate_children()
+ *
+ * The attribute value is a string that specifies the file attributes that should be gathered.
+ * It is not an error if its not possible to read a particular requested attribute from a file,
+ * it just won't be set. attribute should be a comma-separated list of attribute or attribute
+ * wildcards. The wildcard "*" means all attributes, and a wildcard like "standard::*" means all
+ * attributes in the standard namespace. An example attribute query be "standard::*,owner::user".
+ * The standard attributes are available as defines, like FILE_ATTRIBUTE_STANDARD_NAME.
+ *
+ * \param attr An attribute query string.
+ * \param queryInfoFlags
+ * \return the created DGioFileIterator object, or nullptr if failed.
+ */
+QExplicitlySharedDataPointer<DGioFileIterator> DGioFile::createFileIterator(QString attr, DGioFileQueryInfoFlags queryInfoFlags)
+{
+    Q_D(DGioFile);
+
+    try {
+        unsigned int flagValue = queryInfoFlags;
+        FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
+        Glib::RefPtr<FileEnumerator> gmmFileEnumerator = d->getGmmFileInstance()->enumerate_children(attr.toStdString(), flags);
+        QExplicitlySharedDataPointer<DGioFileIterator> fileIterPtr(new DGioFileIterator(gmmFileEnumerator.release()));
+
+        return fileIterPtr;
+    } catch (const Glib::Error &error) {
+        qDebug() << QString::fromStdString(error.what().raw());
+    }
+
+    return QExplicitlySharedDataPointer<DGioFileIterator>(nullptr);
 }
