@@ -4,30 +4,36 @@
 configure_file ("gio-qt.pc.in" "gio-qt.pc" @ONLY)
 
 set (QGIO_PUBLIC_HEADER_FILES
-    dgiovolumemanager.h
-    dgiomountoperation.h
-    dgiomount.h
-    dgiovolume.h
-    dgiofile.h
-    dgiofileinfo.h
-    dgioutils.h
-    dgiofileiterator.h
+    include/dgiovolumemanager.h
+    include/dgiomountoperation.h
+    include/dgiomount.h
+    include/dgiovolume.h
+    include/dgiofile.h
+    include/dgiofileinfo.h
+    include/dgioutils.h
+    include/dgiofileiterator.h
+)
+
+set (QGIO_PRIVATE_HEADER_FILES
+    private/dgiohelper.h
 )
 
 set (QGIO_PRIVATE_CPP_FILES
-    dgiovolumemanager.cpp
-    dgiomountoperation.cpp
-    dgiomount.cpp
-    dgiovolume.cpp
-    dgiofile.cpp
-    dgiofileinfo.cpp
-    dgioutils.cpp
-    dgiofileiterator.cpp
+    source/dgiovolumemanager.cpp
+    source/dgiomountoperation.cpp
+    source/dgiomount.cpp
+    source/dgiovolume.cpp
+    source/dgiofile.cpp
+    source/dgiofileinfo.cpp
+    source/dgioutils.cpp
+    source/dgiofileiterator.cpp
+    private/dgiohelper.cpp
 )
 
 # Library
 add_library (gio-qt SHARED
     ${QGIO_PUBLIC_HEADER_FILES}
+    ${QGIO_PRIVATE_HEADER_FILES}
     ${QGIO_PRIVATE_CPP_FILES}
 )
 
@@ -40,8 +46,9 @@ set_target_properties(
 target_include_directories(gio-qt
 PRIVATE
     ${GIOMM_INCLUDE_DIRS}
+    ${CMAKE_CURRENT_LIST_DIR}/private
 PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}
+    ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
 target_link_libraries (gio-qt Qt5::Core ${GIOMM_LIBRARIES})
