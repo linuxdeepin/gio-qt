@@ -8,7 +8,16 @@ namespace Gio {
 class File;
 }
 
+enum DGioFileQueryInfoFlag
+{
+    FILE_QUERY_INFO_NONE = 0x0,
+    FILE_QUERY_INFO_NOFOLLOW_SYMLINKS = (1 << 0)
+};
+
+Q_DECLARE_FLAGS(DGioFileQueryInfoFlags, DGioFileQueryInfoFlag)
+
 class DGioFileInfo;
+class DGioFileIterator;
 class DGioFilePrivate;
 class DGioFile : public QObject, public QSharedData
 {
@@ -24,6 +33,7 @@ public:
     QString path() const;
     QString uri() const;
     QExplicitlySharedDataPointer<DGioFileInfo> createFileSystemInfo();
+    QExplicitlySharedDataPointer<DGioFileIterator> createFileIterator(QString attr, DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
 
 private:
     QScopedPointer<DGioFilePrivate> d_ptr;

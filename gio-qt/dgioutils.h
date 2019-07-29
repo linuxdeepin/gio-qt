@@ -23,6 +23,7 @@ public:
     static QString userSpecialDir(DGioUserDirectory userDirectory);
     static QStringList systemDataDirs();
     static QString userDataDir();
+    static QString tmpDir();
 };
 
 #endif // DGIOUTILS_H

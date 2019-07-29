@@ -51,7 +51,7 @@ void DGioMountOperationPrivate::slot_askPassword(const Glib::ustring &message, c
     QString msg = QString::fromStdString(message.raw());
     QString defaultUser = QString::fromStdString(default_user.raw());
     QString defaultDomain = QString::fromStdString(default_domain.raw());
-    DGioAskPasswordFlags askPasswordFlags = static_cast<DGioAskPasswordFlags>(flags);
+    DGioAskPasswordFlags askPasswordFlags(static_cast<DGioAskPasswordFlag>(flags));
 
     Q_EMIT q->askPassword(msg, defaultUser, defaultDomain, askPasswordFlags);
 }

@@ -8,6 +8,7 @@
 #include <dgiovolume.h>
 #include <dgiovolumemanager.h>
 #include <dgiofileinfo.h>
+#include <dgiofileiterator.h>
 
 int main(int argc, char * argv[])
 {
@@ -15,19 +16,33 @@ int main(int argc, char * argv[])
 
     qDebug() << "----------------------";
 
-    DGioFile * f = DGioFile::createFromPath("/media/wzc/aaaaaaaaaaaaaaaa");
+    DGioFile *networkFile = DGioFile::createFromUri("network:///");
+    if (networkFile) {
+        QExplicitlySharedDataPointer<DGioFileIterator> iter = networkFile->createFileIterator("standard::*,mountable::can-mount");
+        if (iter) {
+            while (QExplicitlySharedDataPointer<DGioFileInfo> fi = iter->next()) {
+                if (fi) {
+                    qDebug() << fi->displayName() << fi->fileType();
+                }
+            }
+        }
+    }
+
+    qDebug() << "----------------------";
+
+    DGioFile * f = DGioFile::createFromPath("/media/wzc/_dde_data");
     if (f) {
         qDebug() << f->basename() << f->path() << f->uri();
         QExplicitlySharedDataPointer<DGioFileInfo> fi = f->createFileSystemInfo();
         if (fi) {
-            qDebug() << fi->fsFreeBytes() << fi->fsUsedBytes() << fi->fsTotalBytes();
+            qDebug() << fi->fsFreeBytes() << fi->fsUsedBytes() << fi->fsTotalBytes() << fi->displayName() << fi->displayName();
         }
         delete f;
     }
 
     qDebug() << "----------------------";
 
-    DGioMount * m = DGioMount::createFromPath("/media/wzc/aaaaaaaaaaaaaaaa");
+    DGioMount * m = DGioMount::createFromPath("/media/wzc/_dde_data");
     if (m) {
         QExplicitlySharedDataPointer<DGioFile> f = m->getRootFile();
         QExplicitlySharedDataPointer<DGioFile> f2 = m->getDefaultLocationFile();

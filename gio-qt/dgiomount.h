@@ -26,6 +26,7 @@ public:
     bool canUnmount() const;
     bool canEject() const;
     QStringList themedIconNames() const;
+    QStringList themedSymbolicIconNames() const;
 
     void unmount(bool forceUnmount = false);
 

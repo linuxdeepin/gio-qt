@@ -192,6 +192,31 @@ QStringList DGioMount::themedIconNames() const
     return iconNames;
 }
 
+QStringList DGioMount::themedSymbolicIconNames() const
+{
+    Q_D(const DGioMount);
+
+    QStringList iconNames;
+
+    Glib::RefPtr<const Icon> icon = d->getGmmMountInstance()->get_symbolic_icon();
+    Glib::RefPtr<const ThemedIcon> themedIcon = Glib::RefPtr<const ThemedIcon>::cast_dynamic(icon);
+
+    if (themedIcon) {
+        QStringList iconNames;
+        char **names;
+        char **iter;
+        names = NULL;
+        g_object_get(G_THEMED_ICON(themedIcon->gobj()), "names", &names, NULL);
+        for (iter = names; *iter; iter++) {
+            iconNames.append(QString(*iter));
+        }
+        g_strfreev(names);
+        return iconNames;
+    }
+
+    return iconNames;
+}
+
 void DGioMount::unmount(bool forceUnmount)
 {
     Q_D(const DGioMount);

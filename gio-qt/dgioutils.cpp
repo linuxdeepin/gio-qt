@@ -54,3 +54,19 @@ QString DGioUtils::userDataDir()
 {
     return QString::fromStdString(Glib::get_user_data_dir());
 }
+
+/*!
+ * \brief Gets the directory to use for temporary files.
+ *
+ * Wrapper of Glib::get_user_data_dir(), behavior similar (but not the same) to QDir::temp() or
+ * QStandardPaths::writableLocation(QStandardPaths::TempLocation).
+ *
+ * This is found from inspecting the environment variables TMPDIR, TMP, and TEMP in that order. If none of those are defined
+ * "/tmp" is returned on UNIX and "C:\\" on Windows.
+ *
+ * \return The directory to use for temporary files.
+ */
+QString DGioUtils::tmpDir()
+{
+    return QString::fromStdString(Glib::get_tmp_dir());
+}

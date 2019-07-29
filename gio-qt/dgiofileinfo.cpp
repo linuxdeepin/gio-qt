@@ -13,6 +13,7 @@ public:
 
     bool getAttributeBoolean(const std::string &attribute) const;
     quint64 getAttributeUint64(const std::string &attribute) const;
+    QString getAttributeString(const std::string &attribute) const;
 
 private:
     Glib::RefPtr<FileInfo> m_gmmFileInfoPtr;
@@ -44,6 +45,11 @@ bool DGioFileInfoPrivate::getAttributeBoolean(const std::string &attribute) cons
 quint64 DGioFileInfoPrivate::getAttributeUint64(const std::string &attribute) const
 {
     return m_gmmFileInfoPtr->get_attribute_uint64(attribute);
+}
+
+QString DGioFileInfoPrivate::getAttributeString(const std::string &attribute) const
+{
+    return QString::fromStdString(m_gmmFileInfoPtr->get_attribute_string(attribute));
 }
 
 // -------------------------------------------------------------
