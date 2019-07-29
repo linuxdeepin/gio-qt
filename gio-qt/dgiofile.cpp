@@ -158,7 +158,7 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileSystemInfo()
  * it just won't be set. attribute should be a comma-separated list of attribute or attribute
  * wildcards. The wildcard "*" means all attributes, and a wildcard like "standard::*" means all
  * attributes in the standard namespace. An example attribute query be "standard::*,owner::user".
- * The standard attributes are availible as defines, like FILE_ATTRIBUTE_STANDARD_NAME.
+ * The standard attributes are available as defines, like FILE_ATTRIBUTE_STANDARD_NAME.
  *
  * \param attr An attribute query string.
  * \param queryInfoFlags
