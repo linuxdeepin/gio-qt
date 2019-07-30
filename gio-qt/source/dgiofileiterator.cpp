@@ -53,7 +53,7 @@ DGioFileIterator::~DGioFileIterator()
 
 }
 
-QExplicitlySharedDataPointer<DGioFileInfo> DGioFileIterator::next()
+QExplicitlySharedDataPointer<DGioFileInfo> DGioFileIterator::nextFile()
 {
     Q_D(DGioFileIterator);
 

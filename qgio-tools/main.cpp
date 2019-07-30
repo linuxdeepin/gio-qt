@@ -20,7 +20,7 @@ int main(int argc, char * argv[])
     if (networkFile) {
         QExplicitlySharedDataPointer<DGioFileIterator> iter = networkFile->createFileIterator("standard::*,mountable::can-mount");
         if (iter) {
-            while (QExplicitlySharedDataPointer<DGioFileInfo> fi = iter->next()) {
+            while (QExplicitlySharedDataPointer<DGioFileInfo> fi = iter->nextFile()) {
                 if (fi) {
                     qDebug() << fi->displayName() << fi->fileType();
                 }

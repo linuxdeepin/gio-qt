@@ -17,7 +17,7 @@ public:
     explicit DGioFileIterator(Gio::FileEnumerator *gmmFileEnumeratorPtr, QObject *parent = nullptr);
     ~DGioFileIterator();
 
-    QExplicitlySharedDataPointer<DGioFileInfo> next();
+    QExplicitlySharedDataPointer<DGioFileInfo> nextFile();
 
 private:
     QScopedPointer<DGioFileIteratorPrivate> d_ptr;

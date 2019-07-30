@@ -33,7 +33,7 @@ public:
     QString path() const;
     QString uri() const;
     QExplicitlySharedDataPointer<DGioFileInfo> createFileSystemInfo();
-    QExplicitlySharedDataPointer<DGioFileIterator> createFileIterator(QString attr, DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
+    QExplicitlySharedDataPointer<DGioFileIterator> createFileIterator(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
 
 private:
     QScopedPointer<DGioFilePrivate> d_ptr;
