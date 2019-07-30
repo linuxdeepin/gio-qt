@@ -34,6 +34,10 @@ public:
     QString uri() const;
     QExplicitlySharedDataPointer<DGioFileInfo> createFileSystemInfo();
     QExplicitlySharedDataPointer<DGioFileIterator> createFileIterator(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
+    void createFileIteratorAsync(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
+
+Q_SIGNALS:
+    void createFileIteratorReady(QExplicitlySharedDataPointer<DGioFileIterator> iter);
 
 private:
     QScopedPointer<DGioFilePrivate> d_ptr;

@@ -26,6 +26,39 @@ int main(int argc, char * argv[])
                 }
             }
         }
+        delete networkFile;
+    }
+
+//    // Can't do asynchronous next_files() on a file enumerator created synchronously
+//    DGioFile *recentFile1 = DGioFile::createFromUri("recent:///");
+//    QExplicitlySharedDataPointer<DGioFileIterator> iter1;
+//    if (recentFile1) {
+//        iter1 = recentFile1->createFileIterator("standard::*");
+//        if (iter1) {
+//            iter1->nextFilesAsync(5);
+//            QObject::connect(iter1.data(), &DGioFileIterator::nextFilesReady, [](QList<QExplicitlySharedDataPointer<DGioFileInfo> > fileInfoList){
+//                for (auto fi : fileInfoList) {
+//                    qDebug() << "xxxxxx" << fi->displayName() << fi->fileType();
+//                }
+//            });
+//        }
+//    }
+
+    DGioFile *recentFile = DGioFile::createFromUri("recent:///");
+    QExplicitlySharedDataPointer<DGioFileIterator> iter;
+    if (recentFile) {
+        recentFile->createFileIteratorAsync("standard::*");
+        QObject::connect(recentFile, &DGioFile::createFileIteratorReady, [&iter](QExplicitlySharedDataPointer<DGioFileIterator> iterr){
+            iter = iterr;
+            if (iter) {
+                iter->nextFilesAsync(5);
+                QObject::connect(iter.data(), &DGioFileIterator::nextFilesReady, [](QList<QExplicitlySharedDataPointer<DGioFileInfo> > fileInfoList){
+                    for (auto fi : fileInfoList) {
+                        qDebug() << "under recent:" << fi->displayName() << fi->fileType();
+                    }
+                });
+            }
+        });
     }
 
     qDebug() << "----------------------";
