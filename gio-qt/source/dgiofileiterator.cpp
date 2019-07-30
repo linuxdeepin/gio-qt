@@ -1,6 +1,7 @@
-#include "dgiofileiterator.h"
+﻿#include "dgiofileiterator.h"
 #include "dgiofileinfo.h"
 
+#include <glibmm.h>
 #include <glibmm/refptr.h>
 
 #include <giomm/init.h>
@@ -22,6 +23,8 @@ private:
 
     DGioFileIterator *q_ptr;
 
+    void slot_nextFileAsyncResult(const Glib::RefPtr<Gio::AsyncResult>& result);
+
     Q_DECLARE_PUBLIC(DGioFileIterator)
 };
 
@@ -37,6 +40,32 @@ Glib::RefPtr<FileEnumerator> DGioFileIteratorPrivate::getGmmFileEnumeratorInstan
     return m_gmmFileEnumeratorPtr;
 }
 
+void DGioFileIteratorPrivate::slot_nextFileAsyncResult(const Glib::RefPtr<AsyncResult> &result)
+{
+    Q_Q(DGioFileIterator);
+
+    try {
+        Glib::ListHandle< Glib::RefPtr<FileInfo> > files = m_gmmFileEnumeratorPtr->next_files_finish(result);
+        QList<QExplicitlySharedDataPointer<DGioFileInfo> > fileInfoList;
+
+        for (auto gmmFileInfoPtr : files) {
+            QExplicitlySharedDataPointer<DGioFileInfo> info(new DGioFileInfo(gmmFileInfoPtr.release()));
+            fileInfoList.append(info);
+        }
+
+        Q_EMIT q->nextFilesReady(fileInfoList);
+    } catch (const Gio::Error& error) {
+        if (error.code() != Gio::Error::CANCELLED) {
+            Q_EMIT q->nextFilesCancelled();
+        } else {
+            // should we add an error signal?
+            qDebug() << QString::fromStdString(error.what().raw());
+        }
+    } catch (const Glib::Error& error) {
+        // should we add an error signal?
+        qDebug() << QString::fromStdString(error.what().raw());
+    }
+}
 
 // -------------------------------------------------------------
 
@@ -69,4 +98,13 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFileIterator::nextFile()
     }
 
     return QExplicitlySharedDataPointer<DGioFileInfo>(nullptr);
+}
+
+void DGioFileIterator::nextFilesAsync(int numberOfFiles, DGioIOPriority io_priority)
+{
+    Q_D(DGioFileIterator);
+
+
+    d->getGmmFileEnumeratorInstance()->next_files_async(sigc::mem_fun(d, &DGioFileIteratorPrivate::slot_nextFileAsyncResult),
+                                                        numberOfFiles, io_priority);
 }

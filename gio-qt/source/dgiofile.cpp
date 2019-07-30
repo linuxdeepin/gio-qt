@@ -26,6 +26,8 @@ private:
 
     DGioFile *q_ptr;
 
+    void slot_enumerateChildrenAsyncResult(const Glib::RefPtr<Gio::AsyncResult>& result);
+
     Q_DECLARE_PUBLIC(DGioFile)
 };
 
@@ -44,6 +46,20 @@ Glib::RefPtr<File> DGioFilePrivate::getGmmFileInstance() const
 QString DGioFilePrivate::uri() const
 {
     return QString::fromStdString(m_gmmFilePtr->get_uri());
+}
+
+void DGioFilePrivate::slot_enumerateChildrenAsyncResult(const Glib::RefPtr<AsyncResult> &result)
+{
+    Q_Q(DGioFile);
+
+    try {
+        Glib::RefPtr<Gio::FileEnumerator> iter = m_gmmFilePtr->enumerate_children_finish(result);
+        QExplicitlySharedDataPointer<DGioFileIterator> fileIterPtr(new DGioFileIterator(iter.release()));
+
+        Q_EMIT q->createFileIteratorReady(fileIterPtr);
+    } catch (const Glib::Error & error) {
+        qDebug() << QString::fromStdString(error.what().raw());
+    }
 }
 
 // -------------------------------------------------------------
@@ -168,9 +184,10 @@ QExplicitlySharedDataPointer<DGioFileIterator> DGioFile::createFileIterator(QStr
 {
     Q_D(DGioFile);
 
+    unsigned int flagValue = queryInfoFlags;
+    FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
+
     try {
-        unsigned int flagValue = queryInfoFlags;
-        FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
         Glib::RefPtr<FileEnumerator> gmmFileEnumerator = d->getGmmFileInstance()->enumerate_children(attr.toStdString(), flags);
         QExplicitlySharedDataPointer<DGioFileIterator> fileIterPtr(new DGioFileIterator(gmmFileEnumerator.release()));
 
@@ -180,4 +197,14 @@ QExplicitlySharedDataPointer<DGioFileIterator> DGioFile::createFileIterator(QStr
     }
 
     return QExplicitlySharedDataPointer<DGioFileIterator>(nullptr);
+}
+
+void DGioFile::createFileIteratorAsync(QString attr, DGioFileQueryInfoFlags queryInfoFlags)
+{
+    Q_D(DGioFile);
+
+    unsigned int flagValue = queryInfoFlags;
+    FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
+    d->getGmmFileInstance()->enumerate_children_async(sigc::mem_fun(d, &DGioFilePrivate::slot_enumerateChildrenAsyncResult),
+                                                      attr.toStdString(), flags);
 }
