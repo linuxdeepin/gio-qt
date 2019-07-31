@@ -6,6 +6,7 @@
 
 class DGioMount;
 class DGioVolume;
+class DGioDrive;
 class DGioVolumeManagerPrivate;
 class DGioVolumeManager : public QObject
 {
@@ -16,6 +17,7 @@ public:
 
     static const QList<QExplicitlySharedDataPointer<DGioMount> > getMounts();
     static const QList<QExplicitlySharedDataPointer<DGioVolume> > getVolumes();
+    static const QList<QExplicitlySharedDataPointer<DGioDrive> > getDrives();
 
 Q_SIGNALS:
     void mountAdded(QExplicitlySharedDataPointer<DGioMount> mount);
