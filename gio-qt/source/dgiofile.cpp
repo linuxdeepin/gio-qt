@@ -165,12 +165,12 @@ QString DGioFile::uri() const
  *
  * \return the created file system info object, or nullptr if create failed.
  */
-QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileSystemInfo()
+QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileSystemInfo(QString attr)
 {
     Q_D(DGioFile);
 
     try {
-        Glib::RefPtr<FileInfo> gmmFileInfo = d->getGmmFileInstance()->query_filesystem_info("filesystem::*");
+        Glib::RefPtr<FileInfo> gmmFileInfo = d->getGmmFileInstance()->query_filesystem_info(attr.toStdString());
         if (gmmFileInfo) {
             QExplicitlySharedDataPointer<DGioFileInfo> fileInfoPtr(new DGioFileInfo(gmmFileInfo.release()));
             return fileInfoPtr;
