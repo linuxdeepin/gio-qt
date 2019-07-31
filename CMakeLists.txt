@@ -2,6 +2,7 @@ project(gio-qt)
 
 cmake_minimum_required(VERSION 3.9.5)
 
+option(BUILD_TESTS "Build tests" OFF)
 option(BUILD_UTILS "Build utilities" ON)
 option(BUILD_DOCS "Build documentation" OFF)
 
@@ -37,9 +38,14 @@ pkg_check_modules(GIOMM giomm-2.4) # look into FindPkgConfig.cmake
 
 add_subdirectory (gio-qt)
 
+if (BUILD_TESTS)
+    find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED Test)
+    add_subdirectory(test)
+endif ()
+
 if (BUILD_UTILS)
     add_subdirectory(qgio-tools)
-endif()
+endif ()
 
 if (BUILD_DOCS)
     if (NOT DOXYGEN_FOUND)

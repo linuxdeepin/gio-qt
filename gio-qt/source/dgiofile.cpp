@@ -119,6 +119,16 @@ DGioFile *DGioFile::createFromUri(QString uri, QObject *parent)
     return new DGioFile(gmmFile.release(), parent);
 }
 
+/*!
+ * \brief Gets the base name (the last component of the path) of the DGioFile
+ *
+ * Wrapper of Gio::File::get_basename(), normally return filename with suffix (without path).
+ *
+ * If called for the top level of a system (such as the filesystem root or a uri like sftp://host/)
+ * it will return a single directory separator (and on Windows, possibly a drive letter).
+ *
+ * If you want to use filenames in a user interface you should use DGioFileInfo::displayName() instead.
+ */
 QString DGioFile::basename() const
 {
     Q_D(const DGioFile);
@@ -126,6 +136,14 @@ QString DGioFile::basename() const
     return QString::fromStdString(d->getGmmFileInstance()->get_basename());
 }
 
+/*!
+ * \brief Gets the local pathname of the DGioFile, if one exists.
+ *
+ * Wrapper of Gio::File::get_path(). For local file it gets the local pathname with filename included,
+ * for filesystem it gets the mount point path.
+ *
+ * If valid, this is guaranteed to be an absolute, canonical path. It might contain symlinks.
+ */
 QString DGioFile::path() const
 {
     Q_D(const DGioFile);
