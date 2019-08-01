@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2018 ~ 2019 Deepin Technology Co., Ltd.
+ * Copyright (C) 2019 Deepin Technology Co., Ltd.
  *
  * Author:     Mike Chen <kegechen@gmail.com>
  *

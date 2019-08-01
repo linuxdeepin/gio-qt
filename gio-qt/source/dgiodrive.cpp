@@ -3,8 +3,6 @@
 #include <glibmm/refptr.h>
 #include <giomm/drive.h>
 
-#include <QDebug>
-
 using namespace Gio;
 
 class DGioDrivePrivate{
@@ -39,9 +37,8 @@ QString DGioDrivePrivate::name() const
     return QString::fromStdString(m_gmmDrivePtr->get_name());
 }
 
-///////////////////////////////////////////////////////////////
-//// class DGioDrive
-/// ///////////////////////////////////////////////////////////
+// -------------------------------------------------------------
+
 DGioDrive::DGioDrive(Gio::Drive *gmmDrivePtr, QObject *parent)
     : QObject(parent)
     , d_ptr(new DGioDrivePrivate(this, gmmDrivePtr))
@@ -54,6 +51,13 @@ DGioDrive::~DGioDrive()
 
 }
 
+/*!
+ * \brief Gets a display name for a drive.
+ *
+ * A display name is guaranteed to be in UTF8 and can thus be displayed in the UI.
+ *
+ * Wrapper of Gio::Drive::get_name()
+ */
 QString DGioDrive::name() const
 {
     Q_D(const DGioDrive);
