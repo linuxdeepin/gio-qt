@@ -179,6 +179,32 @@ QString DGioFile::uri() const
 }
 
 /*!
+ * \brief Gets the requested information about the file.
+ *
+ * Wrapper of Gio::File::query_info(const std::string& attributes = "*", FileQueryInfoFlags flags = FILE_QUERY_INFO_NONE).
+ *
+ * \return the created file info object, or nullptr if create failed.
+ */
+QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileInfo(QString attr, DGioFileQueryInfoFlags queryInfoFlags)
+{
+    Q_D(DGioFile);
+
+    try {
+        unsigned int flagValue = queryInfoFlags;
+        FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
+        Glib::RefPtr<FileInfo> gmmFileInfo = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);
+        if (gmmFileInfo) {
+            QExplicitlySharedDataPointer<DGioFileInfo> fileInfoPtr(new DGioFileInfo(gmmFileInfo.release()));
+            return fileInfoPtr;
+        }
+    } catch (const Glib::Error &error) {
+        qDebug() << QString::fromStdString(error.what().raw());
+    }
+
+    return QExplicitlySharedDataPointer<DGioFileInfo>(nullptr);
+}
+
+/*!
  * \brief Obtains information about the filesystem the file is on.
  *
  * Wrapper of Gio::File::query_filesystem_info("filesystem::*").

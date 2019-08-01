@@ -115,6 +115,18 @@ DGioFileType DGioFileInfo::fileType() const
     return static_cast<DGioFileType>(d->getGmmFileInfoInstance()->get_file_type());
 }
 
+/*!
+ * \brief DGioFileInfo::fileSize
+ * Wrapper of Gio::FileInfo::get_size()
+ * \return
+ */
+quint64 DGioFileInfo::fileSize() const
+{
+    Q_D(const DGioFileInfo);
+
+    return static_cast<quint64>(d->getGmmFileInfoInstance()->get_size());
+}
+
 bool DGioFileInfo::fsReadOnly() const
 {
     Q_D(const DGioFileInfo);
