@@ -52,9 +52,7 @@ DGioDrive::~DGioDrive()
 }
 
 /*!
- * \brief Gets a display name for a drive.
- *
- * A display name is guaranteed to be in UTF8 and can thus be displayed in the UI.
+ * \brief Gets the name of drive.
  *
  * Wrapper of Gio::Drive::get_name()
  */
