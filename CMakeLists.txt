@@ -54,6 +54,7 @@ if (BUILD_DOCS)
 
     set (DOXYGEN_GENERATE_HTML YES)
     set (DOXYGEN_GENERATE_QHP YES)
+    set (DOXYGEN_EXTRACT_STATIC YES)
     set (DOXYGEN_OUTPUT_DIRECTORY "./docs/")
     set (DOXYGEN_EXCLUDE_SYMBOLS "*Private;*Test")
     set (DOXYGEN_QHG_LOCATION "qhelpgenerator")
