@@ -52,7 +52,7 @@ DGioDrive::~DGioDrive()
 }
 
 /*!
- * \brief Gets the name of @a drive.
+ * \brief Gets the name of drive.
  *
  * Wrapper of Gio::Drive::get_name()
  */
