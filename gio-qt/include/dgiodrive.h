@@ -8,7 +8,6 @@ namespace Gio {
 class Drive;
 }
 
-class DGioMount;
 class DGioDrivePrivate;
 class DGioDrive : public QObject, public QSharedData{
     Q_OBJECT
