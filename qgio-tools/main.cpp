@@ -89,7 +89,17 @@ int main(int argc, char * argv[])
         qDebug() << f->basename() << f->path() << f->uri();
         QExplicitlySharedDataPointer<DGioFileInfo> fi = f->createFileSystemInfo();
         if (fi) {
-            qDebug() << fi->fsFreeBytes() << fi->fsUsedBytes() << fi->fsTotalBytes() << fi->displayName() << fi->displayName();
+            qDebug() << fi->fsFreeBytes() << fi->fsUsedBytes() << fi->fsTotalBytes() << fi->fileType() << fi->displayName();
+        }
+        delete f;
+    }
+
+    f = DGioFile::createFromPath("/home/mike/Desktop/1.png");
+    if (f) {
+        qDebug() << f->basename() << f->path() << f->uri();
+        QExplicitlySharedDataPointer<DGioFileInfo> fi = f->createFileInfo();
+        if (fi) {
+            qDebug() << fi->fileType() << fi->displayName() << fi->fileSize();
         }
         delete f;
     }

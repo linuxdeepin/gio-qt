@@ -50,6 +50,7 @@ public:
     // file info
     QString displayName() const;
     DGioFileType fileType() const;
+    quint64 fileSize() const;
 
     // filesystem info.
     bool fsReadOnly() const;
