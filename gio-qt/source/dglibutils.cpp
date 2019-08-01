@@ -18,7 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "dgioutils.h"
+#include "dglibutils.h"
 
 #include <QStringList>
 
@@ -32,8 +32,11 @@
  *
  * On UNIX platforms this is determined using the mechanisms described in the
  * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
+ *
+ * \param userDirectory The logical id of special directory.
+ * \return The path to the specified special directory, or an empty string if the logical id was not found.
  */
-QString DGioUtils::userSpecialDir(DGioUserDirectory userDirectory)
+QString DGlibUtils::userSpecialDir(DGlibUserDirectory userDirectory)
 {
     return QString::fromStdString(Glib::get_user_special_dir(static_cast<Glib::UserDirectory>(userDirectory)));
 }
@@ -48,7 +51,7 @@ QString DGioUtils::userSpecialDir(DGioUserDirectory userDirectory)
  * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec)
  * In this case the list of directories retrieved will be XDG_DATA_DIRS.
  */
-QStringList DGioUtils::systemDataDirs()
+QStringList DGlibUtils::systemDataDirs()
 {
     std::vector<std::string> dirs = Glib::get_system_data_dirs();
     QStringList lst;
@@ -70,7 +73,7 @@ QStringList DGioUtils::systemDataDirs()
  * [XDG Base Directory Specification](http://www.freedesktop.org/Standards/basedir-spec).
  * In this case the directory retrieved will be `XDG_DATA_HOME`.
  */
-QString DGioUtils::userDataDir()
+QString DGlibUtils::userDataDir()
 {
     return QString::fromStdString(Glib::get_user_data_dir());
 }
@@ -86,7 +89,7 @@ QString DGioUtils::userDataDir()
  *
  * \return The directory to use for temporary files.
  */
-QString DGioUtils::tmpDir()
+QString DGlibUtils::tmpDir()
 {
     return QString::fromStdString(Glib::get_tmp_dir());
 }

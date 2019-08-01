@@ -18,12 +18,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#ifndef DGIOUTILS_H
-#define DGIOUTILS_H
+#ifndef DGLIBUTILS_H
+#define DGLIBUTILS_H
 
 #include <QObject>
 
-enum DGioUserDirectory
+enum DGlibUserDirectory
 {
     USER_DIRECTORY_DESKTOP,
     USER_DIRECTORY_DOCUMENTS,
@@ -35,15 +35,15 @@ enum DGioUserDirectory
     USER_DIRECTORY_VIDEOS,
     USER_N_DIRECTORIES
 };
-Q_ENUMS(DGioUserDirectory);
+Q_ENUMS(DGlibUserDirectory);
 
-class DGioUtils
+class DGlibUtils
 {
 public:
-    static QString userSpecialDir(DGioUserDirectory userDirectory);
+    static QString userSpecialDir(DGlibUserDirectory userDirectory);
     static QStringList systemDataDirs();
     static QString userDataDir();
     static QString tmpDir();
 };
 
-#endif // DGIOUTILS_H
+#endif // DGLIBUTILS_H

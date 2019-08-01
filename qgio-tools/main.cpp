@@ -22,8 +22,8 @@
 #include <QCoreApplication>
 #include <QExplicitlySharedDataPointer>
 
+#include <dglibutils.h>
 #include <dgiofile.h>
-#include <dgioutils.h>
 #include <dgiomount.h>
 #include <dgiovolume.h>
 #include <dgiodrive.h>
@@ -33,7 +33,7 @@
 
 int main(int argc, char * argv[])
 {
-    qDebug() << DGioUtils::systemDataDirs();
+    qDebug() << DGlibUtils::systemDataDirs();
 
     qDebug() << "----------------------";
 

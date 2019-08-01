@@ -4,13 +4,13 @@
 configure_file ("gio-qt.pc.in" "gio-qt.pc" @ONLY)
 
 set (QGIO_PUBLIC_HEADER_FILES
+    include/dglibutils.h
     include/dgiovolumemanager.h
     include/dgiomountoperation.h
     include/dgiomount.h
     include/dgiovolume.h
     include/dgiofile.h
     include/dgiofileinfo.h
-    include/dgioutils.h
     include/dgiofileiterator.h
     include/dgiodrive.h
 )
@@ -20,13 +20,13 @@ set (QGIO_PRIVATE_HEADER_FILES
 )
 
 set (QGIO_PRIVATE_CPP_FILES
+    source/dglibutils.cpp
     source/dgiovolumemanager.cpp
     source/dgiomountoperation.cpp
     source/dgiomount.cpp
     source/dgiovolume.cpp
     source/dgiofile.cpp
     source/dgiofileinfo.cpp
-    source/dgioutils.cpp
     source/dgiofileiterator.cpp
     source/dgiodrive.cpp
     private/dgiohelper.cpp
