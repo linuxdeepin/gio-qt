@@ -6,6 +6,7 @@
 #include <dgioutils.h>
 #include <dgiomount.h>
 #include <dgiovolume.h>
+#include <dgiodrive.h>
 #include <dgiovolumemanager.h>
 #include <dgiofileinfo.h>
 #include <dgiofileiterator.h>
@@ -85,7 +86,7 @@ int main(int argc, char * argv[])
         delete m;
     }
 
-    qDebug() << "----------------------";
+    qDebug() << "---------mounts-------------";
 
     const QList<QExplicitlySharedDataPointer<DGioMount> > mnts = DGioVolumeManager::getMounts();
 
@@ -97,11 +98,19 @@ int main(int argc, char * argv[])
         qDebug() << p->name() << p->uuid() << p->canUnmount() << p->themedIconNames() << p->themedIconNames();
     }
 
-    qDebug() << "----------------------";
+    qDebug() << "--------volumes--------------";
 
     const QList<QExplicitlySharedDataPointer<DGioVolume> > vols = DGioVolumeManager::getVolumes();
 
     for (const QExplicitlySharedDataPointer<DGioVolume> &p : vols) {
+        qDebug() << p->name();
+    }
+
+    qDebug() << "----------drives------------";
+
+    const QList<QExplicitlySharedDataPointer<DGioDrive> > drvs = DGioVolumeManager::getDrives();
+
+    for (const QExplicitlySharedDataPointer<DGioDrive> &p : drvs) {
         qDebug() << p->name();
     }
 

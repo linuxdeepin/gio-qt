@@ -12,6 +12,7 @@ set (QGIO_PUBLIC_HEADER_FILES
     include/dgiofileinfo.h
     include/dgioutils.h
     include/dgiofileiterator.h
+    include/dgiodrive.h
 )
 
 set (QGIO_PRIVATE_HEADER_FILES
@@ -27,6 +28,7 @@ set (QGIO_PRIVATE_CPP_FILES
     source/dgiofileinfo.cpp
     source/dgioutils.cpp
     source/dgiofileiterator.cpp
+    source/dgiodrive.cpp
     private/dgiohelper.cpp
 )
 

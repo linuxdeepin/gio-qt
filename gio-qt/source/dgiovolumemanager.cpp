@@ -1,5 +1,6 @@
 #include "dgiomount.h"
 #include "dgiovolume.h"
+#include "dgiodrive.h"
 #include "dgiovolumemanager.h"
 
 #include <glibmm/refptr.h>
@@ -175,4 +176,20 @@ const QList<QExplicitlySharedDataPointer<DGioVolume> > DGioVolumeManager::getVol
     }
 
     return volumes;
+}
+
+const QList<QExplicitlySharedDataPointer<DGioDrive> > DGioVolumeManager::getDrives()
+{
+    Gio::init();
+
+    QList<QExplicitlySharedDataPointer<DGioDrive> > drives;
+
+    Glib::RefPtr<VolumeMonitor> vm = Gio::VolumeMonitor::get();
+
+    auto drvs = vm->get_connected_drives();
+    for(auto oneDrive : drvs){
+        QExplicitlySharedDataPointer<DGioDrive> drvPtr(new DGioDrive(oneDrive.release()));
+        drives.push_back(drvPtr);
+    }
+    return drives;
 }
