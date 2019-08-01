@@ -4,6 +4,7 @@
 #include <dgiofile.h>
 #include <dgiofileinfo.h>
 #include <dgiomountoperation.h>
+#include <dglibutils.h>
 
 #include <giomm.h>
 
@@ -15,6 +16,7 @@ public:
     DGioMatchGioEnumTest();
 
 private Q_SLOTS:
+    void testCase_DGlibUtilsClass();
     void testCase_DGioFileClass();
     void testCase_DGioFileInfoClass();
     void testCase_DGioMountOperationClass();
@@ -23,6 +25,14 @@ private Q_SLOTS:
 DGioMatchGioEnumTest::DGioMatchGioEnumTest()
 {
     //
+}
+
+void DGioMatchGioEnumTest::testCase_DGlibUtilsClass()
+{
+    QCOMPARE(DGlibFormatSizeFlag::FORMAT_SIZE_DEFAULT, Glib::FORMAT_SIZE_DEFAULT);
+    QCOMPARE(DGlibFormatSizeFlag::FORMAT_SIZE_LONG_FORMAT, Glib::FORMAT_SIZE_LONG_FORMAT);
+    QCOMPARE(DGlibFormatSizeFlag::FORMAT_SIZE_IEC_UNITS, Glib::FORMAT_SIZE_IEC_UNITS);
+    QCOMPARE(DGlibFormatSizeFlag::FORMAT_SIZE_BITS, Glib::FORMAT_SIZE_BITS);
 }
 
 void DGioMatchGioEnumTest::testCase_DGioFileClass()

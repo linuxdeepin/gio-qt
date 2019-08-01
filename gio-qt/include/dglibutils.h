@@ -37,6 +37,15 @@ enum DGlibUserDirectory
 };
 Q_ENUMS(DGlibUserDirectory);
 
+enum DGlibFormatSizeFlag
+{
+    FORMAT_SIZE_DEFAULT = 0x0,
+    FORMAT_SIZE_LONG_FORMAT = 1 << 0,
+    FORMAT_SIZE_IEC_UNITS = 1 << 1,
+    FORMAT_SIZE_BITS = 1 << 2
+};
+Q_DECLARE_FLAGS(DGlibFormatSizeFlags, DGlibFormatSizeFlag)
+
 class DGlibUtils
 {
 public:
@@ -44,6 +53,7 @@ public:
     static QStringList systemDataDirs();
     static QString userDataDir();
     static QString tmpDir();
+    static QString formatSize(quint64 size, DGlibFormatSizeFlags flags = FORMAT_SIZE_DEFAULT);
 };
 
 #endif // DGLIBUTILS_H

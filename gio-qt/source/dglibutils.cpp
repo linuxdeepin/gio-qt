@@ -93,3 +93,21 @@ QString DGlibUtils::tmpDir()
 {
     return QString::fromStdString(Glib::get_tmp_dir());
 }
+
+/*!
+ * \brief Formats a size (for example the size of a file) into a human readable string.
+ *
+ * Sizes are rounded to the nearest size prefix (kB, MB, GB) and are displayed rounded to the nearest tenth. E.g. the file
+ * size 3292528 bytes will be converted into the string "3.2 MB".
+ *
+ * The prefix units base is 1000 (i.e. 1 kB is 1000 bytes), unless the DGlibFormatSizeFlags::FORMAT_SIZE_IEC_UNITS flag is set.
+ *
+ * \param size A size in bytes.
+ * \param flags Flags to modify the output.
+ * \return A formatted string containing a human readable file size.
+ */
+QString DGlibUtils::formatSize(quint64 size, DGlibFormatSizeFlags flags)
+{
+    unsigned int flagValue = flags;
+    return QString::fromStdString(Glib::format_size(size, static_cast<Glib::FormatSizeFlags>(flagValue)));
+}
