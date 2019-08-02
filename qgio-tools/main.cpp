@@ -94,16 +94,6 @@ int main(int argc, char * argv[])
         delete f;
     }
 
-    f = DGioFile::createFromPath("/home/mike/Desktop/1.png");
-    if (f) {
-        qDebug() << f->basename() << f->path() << f->uri();
-        QExplicitlySharedDataPointer<DGioFileInfo> fi = f->createFileInfo();
-        if (fi) {
-            qDebug() << fi->fileType() << fi->displayName() << fi->fileSize();
-        }
-        delete f;
-    }
-
     qDebug() << "----------------------";
 
     DGioMount * m = DGioMount::createFromPath("/media/wzc/_dde_data");
