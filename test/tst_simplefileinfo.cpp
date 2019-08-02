@@ -27,9 +27,10 @@ void DGioSimpleFileInfoTest::testCase_RegularFile()
     QFileInfo tmpFileInfo(tmpFile);
 
     QScopedPointer<DGioFile> file(DGioFile::createFromPath(tmpFileInfo.absoluteFilePath()));
-
+    QExplicitlySharedDataPointer<DGioFileInfo> fi = file->createFileInfo();
     QCOMPARE(file->basename(), tmpFileInfo.fileName());
     QCOMPARE(file->path(), tmpFileInfo.absoluteFilePath());
+    QCOMPARE(fi->fileSize(), tmpFileInfo.size());
 }
 
 QTEST_APPLESS_MAIN(DGioSimpleFileInfoTest)
