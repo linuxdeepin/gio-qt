@@ -45,6 +45,14 @@ enum DGioMountOperationResult
 };
 Q_ENUMS(DGioMountOperationResult);
 
+enum DGioPasswordSave
+{
+  PASSWORD_SAVE_NEVER,
+  PASSWORD_SAVE_FOR_SESSION,
+  PASSWORD_SAVE_PERMANENTLY
+};
+Q_ENUMS(DGioPasswordSave);
+
 class DGioMountOperationPrivate;
 class DGioMountOperation : public QObject
 {
@@ -54,6 +62,18 @@ public:
     ~DGioMountOperation();
 
     QString username() const;
+    void setUsername(QString name);
+    QString password() const;
+    void setPassword(QString password);
+    DGioPasswordSave passwordSave();
+    void setPasswordSave(DGioPasswordSave save);
+    QString domain() const;
+    void setDomain(QString domain);
+
+    bool anonymous()const;
+    void setAnonymous(bool anonymous =  true);
+    int choice()const;
+    void setChoice(int choice);
 
     void reply(DGioMountOperationResult result);
 

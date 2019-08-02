@@ -227,3 +227,10 @@ QExplicitlySharedDataPointer<DGioVolume> DGioMount::getVolume()
     return QExplicitlySharedDataPointer<DGioVolume>(nullptr);
 }
 
+QString DGioMount::getSortKey()const
+{
+    Q_D(const DGioMount);
+
+    return QString::fromStdString(d->getGmmMountInstance()->get_sort_key());
+}
+
