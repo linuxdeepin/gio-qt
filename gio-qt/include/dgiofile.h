@@ -48,6 +48,7 @@ public:
 
     static DGioFile * createFromPath(QString path, QObject *parent = nullptr);
     static DGioFile * createFromUri(QString uri, QObject *parent = nullptr);
+    static DGioFile * createFromCmdArg(QString uri, QObject *parent = nullptr);
 
     QString basename() const;
     QString path() const;

@@ -140,6 +140,27 @@ DGioFile *DGioFile::createFromUri(QString uri, QObject *parent)
 }
 
 /*!
+ * \brief Create a DGioFile instance for a given argument from the command line.
+ *
+ * The value of \a arg can be either a URI, an absolute path or a relative path resolved relative
+ * to the current working directory. This operation never fails, but the returned object might
+ * not support any I/O operation if \a arg points to a malformed path.
+ *
+ * \param arg A string containing either a URI, a relative or absolute path.
+ * \return the created DGioFile instance
+ */
+DGioFile *DGioFile::createFromCmdArg(QString arg, QObject *parent)
+{
+    // ensure GIO got initialized
+    Gio::init();
+
+    // File::create_for_uri never falls.
+    Glib::RefPtr<File> gmmFile = File::create_for_commandline_arg(arg.toStdString());
+
+    return new DGioFile(gmmFile.release(), parent);
+}
+
+/*!
  * \brief Gets the base name (the last component of the path) of the DGioFile
  *
  * Wrapper of Gio::File::get_basename(), normally return filename with suffix (without path).

@@ -38,6 +38,9 @@ public:
     ~DGioVolume();
 
     QString name() const;
+    bool canMount() const;
+    bool canEject() const;
+    bool shouldAutoMount() const;
 
     QExplicitlySharedDataPointer<DGioMount> getMount();
 

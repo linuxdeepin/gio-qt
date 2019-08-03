@@ -84,6 +84,27 @@ QString DGioVolume::name() const
     return d->name();
 }
 
+bool DGioVolume::canMount() const
+{
+    Q_D(const DGioVolume);
+
+    return d->getGmmVolumeInstance()->can_mount();
+}
+
+bool DGioVolume::canEject() const
+{
+    Q_D(const DGioVolume);
+
+    return d->getGmmVolumeInstance()->can_eject();
+}
+
+bool DGioVolume::shouldAutoMount() const
+{
+    Q_D(const DGioVolume);
+
+    return d->getGmmVolumeInstance()->should_automount();
+}
+
 // Return value can be nullptr
 QExplicitlySharedDataPointer<DGioMount> DGioVolume::getMount()
 {
