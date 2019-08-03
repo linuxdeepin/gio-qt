@@ -117,6 +117,83 @@ QString DGioMountOperation::username() const
     return d->username();
 }
 
+void DGioMountOperation::setUsername(QString name)
+{
+    Q_D(DGioMountOperation);
+
+    d->getGmmMountOperationInstance()->set_username(name.toStdString());
+}
+
+QString DGioMountOperation::password() const
+{
+    Q_D(const DGioMountOperation);
+
+    return QString::fromStdString(d->getGmmMountOperationInstance()->get_password());
+}
+
+void DGioMountOperation::setPassword(QString password)
+{
+    Q_D(DGioMountOperation);
+
+    d->getGmmMountOperationInstance()->set_password(password.toStdString());
+}
+
+DGioPasswordSave DGioMountOperation::passwordSave()
+{
+    Q_D(const DGioMountOperation);
+
+    return static_cast<DGioPasswordSave>(d->getGmmMountOperationInstance()->get_password_save());
+}
+
+void DGioMountOperation::setPasswordSave(DGioPasswordSave save)
+{
+    Q_D(DGioMountOperation);
+
+    d->getGmmMountOperationInstance()->set_password_save(static_cast<PasswordSave>(save));
+}
+
+QString DGioMountOperation::domain() const
+{
+    Q_D(const DGioMountOperation);
+
+    return QString::fromStdString(d->getGmmMountOperationInstance()->get_domain());
+}
+
+void DGioMountOperation::setDomain(QString domain)
+{
+    Q_D(DGioMountOperation);
+
+    d->getGmmMountOperationInstance()->set_domain(domain.toStdString());
+}
+
+bool DGioMountOperation::anonymous() const
+{
+    Q_D(const DGioMountOperation);
+
+    return d->getGmmMountOperationInstance()->get_anonymous();
+}
+
+void DGioMountOperation::setAnonymous(bool anonymous)
+{
+    Q_D(DGioMountOperation);
+
+    d->getGmmMountOperationInstance()->set_anonymous(anonymous);
+}
+
+int DGioMountOperation::choice() const
+{
+    Q_D(const DGioMountOperation);
+
+    return d->getGmmMountOperationInstance()->get_choice();
+}
+
+void DGioMountOperation::setChoice(int choice)
+{
+    Q_D(DGioMountOperation);
+
+    d->getGmmMountOperationInstance()->set_choice(choice);
+}
+
 void DGioMountOperation::reply(DGioMountOperationResult result)
 {
     Q_D(DGioMountOperation);

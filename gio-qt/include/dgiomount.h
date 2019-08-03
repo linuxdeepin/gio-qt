@@ -54,6 +54,8 @@ public:
     QExplicitlySharedDataPointer<DGioFile> getDefaultLocationFile();
     QExplicitlySharedDataPointer<DGioVolume> getVolume();
 
+    QString getSortKey()const;
+
 private:
     QScopedPointer<DGioMountPrivate> d_ptr;
 
