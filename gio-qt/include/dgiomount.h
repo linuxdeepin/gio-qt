@@ -45,16 +45,16 @@ public:
     bool isShadowed() const;
     bool canUnmount() const;
     bool canEject() const;
+    QString sortKey() const;
     QStringList themedIconNames() const;
     QStringList themedSymbolicIconNames() const;
 
     void unmount(bool forceUnmount = false);
+    void eject(bool forceEject = false);
 
     QExplicitlySharedDataPointer<DGioFile> getRootFile();
     QExplicitlySharedDataPointer<DGioFile> getDefaultLocationFile();
     QExplicitlySharedDataPointer<DGioVolume> getVolume();
-
-    QString getSortKey()const;
 
 private:
     QScopedPointer<DGioMountPrivate> d_ptr;
