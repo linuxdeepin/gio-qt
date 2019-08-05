@@ -169,6 +169,13 @@ bool DGioMount::canEject() const
     return d->getGmmMountInstance()->can_eject();
 }
 
+QString DGioMount::sortKey() const
+{
+    Q_D(const DGioMount);
+
+    return QString::fromStdString(d->getGmmMountInstance()->get_sort_key());
+}
+
 QStringList DGioMount::themedIconNames() const
 {
     Q_D(const DGioMount);
@@ -192,6 +199,13 @@ void DGioMount::unmount(bool forceUnmount)
     Q_D(const DGioMount);
 
     return d->getGmmMountInstance()->unmount(forceUnmount ? MOUNT_UNMOUNT_FORCE : MOUNT_UNMOUNT_NONE);
+}
+
+void DGioMount::eject(bool forceEject)
+{
+    Q_D(const DGioMount);
+
+    return d->getGmmMountInstance()->eject(forceEject ? MOUNT_UNMOUNT_FORCE : MOUNT_UNMOUNT_NONE);
 }
 
 QExplicitlySharedDataPointer<DGioFile> DGioMount::getRootFile()
@@ -226,11 +240,3 @@ QExplicitlySharedDataPointer<DGioVolume> DGioMount::getVolume()
 
     return QExplicitlySharedDataPointer<DGioVolume>(nullptr);
 }
-
-QString DGioMount::getSortKey()const
-{
-    Q_D(const DGioMount);
-
-    return QString::fromStdString(d->getGmmMountInstance()->get_sort_key());
-}
-
