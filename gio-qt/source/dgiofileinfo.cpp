@@ -32,6 +32,7 @@ public:
 
     Glib::RefPtr<FileInfo> getGmmFileInfoInstance() const;
 
+    Glib::RefPtr<const Icon> icon() const;
     bool getAttributeBoolean(const std::string &attribute) const;
     quint64 getAttributeUint64(const std::string &attribute) const;
     QString getAttributeString(const std::string &attribute) const;
@@ -56,6 +57,11 @@ DGioFileInfoPrivate::DGioFileInfoPrivate(DGioFileInfo *qq, FileInfo *gmmFileInfo
 Glib::RefPtr<FileInfo> DGioFileInfoPrivate::getGmmFileInfoInstance() const
 {
     return m_gmmFileInfoPtr;
+}
+
+Glib::RefPtr<const Icon> DGioFileInfoPrivate::icon() const
+{
+    return getGmmFileInfoInstance()->get_icon();
 }
 
 bool DGioFileInfoPrivate::getAttributeBoolean(const std::string &attribute) const
@@ -118,8 +124,10 @@ DGioFileType DGioFileInfo::fileType() const
 
 /*!
  * \brief DGioFileInfo::fileSize
+ *
  * Wrapper of Gio::FileInfo::get_size()
- * \return
+ *
+ * \return the file size in bytes.
  */
 quint64 DGioFileInfo::fileSize() const
 {
@@ -128,13 +136,48 @@ quint64 DGioFileInfo::fileSize() const
     return static_cast<quint64>(d->getGmmFileInfoInstance()->get_size());
 }
 
+/*!
+ * \brief get the file content type (MimeType).
+ *
+ * Wrapper of Gio::FileInfo::get_content_type()
+ *
+ * \return a single MimeType of the file, such as "text/plain".
+ */
+QString DGioFileInfo::contentType() const
+{
+    Q_D(const DGioFileInfo);
+
+    return QString::fromStdString(d->getGmmFileInfoInstance()->get_content_type());
+}
+
+/*!
+ * \brief DGioFileInfo::iconString
+ *
+ * Wrapper of Gio::FileInfo::get_icon() and then Gio::Icon::to_string().
+ *
+ * Notice the returned value can be in two different form:
+ *
+ *  - a native path (such as "/path/to/my icon.png") without escaping if the file for icon is a native
+ *    file. If the file is not native, the returned string is the result of g_file_get_uri()
+ *    (such as "sftp://path/to/my%20icon.png").
+ *
+ *  - a icon name if icon is a ThemedIcon with exactly one name, the encoding is simply the name (such as
+ *    network-server), or a list of theme names (such as ". GThemedIcon text-plain text-x-generic text-plain-symbolic").
+ *
+ * \return the icon string as discribed above.
+ */
+QString DGioFileInfo::iconString() const
+{
+    Q_D(const DGioFileInfo);
+
+    return QString::fromStdString(d->icon()->to_string());
+}
+
 QStringList DGioFileInfo::themedIconNames() const
 {
     Q_D(const DGioFileInfo);
 
-    Glib::RefPtr<const Icon> icon = d->getGmmFileInfoInstance()->get_icon();
-
-    return DGioPrivate::getThemedIconNames(icon);
+    return DGioPrivate::getThemedIconNames(d->icon());
 }
 
 bool DGioFileInfo::fsReadOnly() const

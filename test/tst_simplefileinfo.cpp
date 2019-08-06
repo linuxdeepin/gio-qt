@@ -31,6 +31,7 @@ void DGioSimpleFileInfoTest::testCase_RegularFile()
     QCOMPARE(file->basename(), tmpFileInfo.fileName());
     QCOMPARE(file->path(), tmpFileInfo.absoluteFilePath());
     QCOMPARE(fi->fileSize(), tmpFileInfo.size());
+    qDebug() << fi->iconString() << fi->contentType();
     QVERIFY(fi->themedIconNames().contains("text-plain")); // is this check okay? better approach?
 }
 

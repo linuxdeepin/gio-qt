@@ -51,6 +51,8 @@ public:
     QString displayName() const;
     DGioFileType fileType() const;
     quint64 fileSize() const;
+    QString contentType() const;
+    QString iconString() const;
     QStringList themedIconNames() const;
 
     // filesystem info.
