@@ -54,6 +54,7 @@ public:
     QString basename() const;
     QString path() const;
     QString uri() const;
+
     QExplicitlySharedDataPointer<DGioFileInfo> createFileInfo(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
     QExplicitlySharedDataPointer<DGioFileInfo> createFileSystemInfo(QString attr = "*");
     QExplicitlySharedDataPointer<DGioFileIterator> createFileIterator(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);

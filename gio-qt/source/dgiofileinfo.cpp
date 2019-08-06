@@ -19,6 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "dgiofileinfo.h"
+#include "dgiohelper.h"
 
 #include <giomm/fileinfo.h>
 
@@ -125,6 +126,15 @@ quint64 DGioFileInfo::fileSize() const
     Q_D(const DGioFileInfo);
 
     return static_cast<quint64>(d->getGmmFileInfoInstance()->get_size());
+}
+
+QStringList DGioFileInfo::themedIconNames() const
+{
+    Q_D(const DGioFileInfo);
+
+    Glib::RefPtr<const Icon> icon = d->getGmmFileInfoInstance()->get_icon();
+
+    return DGioPrivate::getThemedIconNames(icon);
 }
 
 bool DGioFileInfo::fsReadOnly() const
