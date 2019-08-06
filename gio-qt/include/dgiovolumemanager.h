@@ -47,6 +47,9 @@ Q_SIGNALS:
     void volumeAdded(QExplicitlySharedDataPointer<DGioVolume> volume);
     void volumeRemoved(QExplicitlySharedDataPointer<DGioVolume> volume);
     void volumeChanged(QExplicitlySharedDataPointer<DGioVolume> volume);
+    void driveConnected(QExplicitlySharedDataPointer<DGioDrive> drive);
+    void driveDisconnected(QExplicitlySharedDataPointer<DGioDrive> drive);
+    void driveChanged(QExplicitlySharedDataPointer<DGioDrive> drive);
 
 private:
     QScopedPointer<DGioVolumeManagerPrivate> d_ptr;

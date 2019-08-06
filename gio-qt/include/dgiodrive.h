@@ -24,6 +24,8 @@
 #include <QObject>
 #include <QSharedData>
 
+#define DGIODRIVE_IDENTIFIER_KIND_UNIX_DEVICE "unix-device"
+
 namespace Gio {
 class Drive;
 }
@@ -36,6 +38,11 @@ public:
     ~DGioDrive();
 
     QString name() const;
+    QString identifier(const QString & kind = DGIODRIVE_IDENTIFIER_KIND_UNIX_DEVICE) const;
+    bool hasVolumes() const;
+    bool canStart() const;
+    bool canStop() const;
+    bool canEject() const;
 
 private:
     QScopedPointer<DGioDrivePrivate> d_ptr;

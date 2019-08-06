@@ -9,7 +9,7 @@ class DGioDrivePrivate{
 public:
     DGioDrivePrivate(DGioDrive *qq, Drive *gmmDrivePtr);
 
-    Glib::RefPtr<Drive> getGmmDriveInstence();
+    Glib::RefPtr<Drive> getGmmDriveInstence() const;
 
     QString name() const;
 
@@ -27,9 +27,9 @@ DGioDrivePrivate::DGioDrivePrivate(DGioDrive *qq, Drive *gmmDrivePtr)
 
 }
 
-Glib::RefPtr<Drive> DGioDrivePrivate::getGmmDriveInstence()
+Glib::RefPtr<Drive> DGioDrivePrivate::getGmmDriveInstence() const
 {
-    return  m_gmmDrivePtr;
+    return m_gmmDrivePtr;
 }
 
 QString DGioDrivePrivate::name() const
@@ -59,5 +59,52 @@ DGioDrive::~DGioDrive()
 QString DGioDrive::name() const
 {
     Q_D(const DGioDrive);
+
     return d->name();
+}
+
+/*!
+ * \brief Gets the identifier of the given kind for drive.
+ *
+ * Wrapper of Gio::Drive::get_identifier()
+ *
+ * The only identifier currently available is DGIODRIVE_IDENTIFIER_KIND_UNIX_DEVICE.
+ *
+ * \param kind the kind of identifier to return
+ *
+ * \return A string containing the requested identfier, or empty string if the drive doesn't have this kind of identifier.
+ */
+QString DGioDrive::identifier(const QString &kind) const
+{
+    Q_D(const DGioDrive);
+
+    return QString::fromStdString(d->getGmmDriveInstence()->get_identifier(kind.toStdString()));
+}
+
+bool DGioDrive::hasVolumes() const
+{
+    Q_D(const DGioDrive);
+
+    return d->getGmmDriveInstence()->has_volumes();
+}
+
+bool DGioDrive::canStart() const
+{
+    Q_D(const DGioDrive);
+
+    return d->getGmmDriveInstence()->can_start();
+}
+
+bool DGioDrive::canStop() const
+{
+    Q_D(const DGioDrive);
+
+    return d->getGmmDriveInstence()->can_stop();
+}
+
+bool DGioDrive::canEject() const
+{
+    Q_D(const DGioDrive);
+
+    return d->getGmmDriveInstence()->can_eject();
 }
