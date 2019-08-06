@@ -29,6 +29,7 @@
 #include <giomm/fileenumerator.h>
 
 #include <QDebug>
+#include <dgiomountoperation.h>
 
 using namespace Gio;
 
@@ -47,6 +48,8 @@ private:
     DGioFile *q_ptr;
 
     void slot_enumerateChildrenAsyncResult(const Glib::RefPtr<Gio::AsyncResult>& result);
+
+    void slot_mountEnclosingVolumeResult(const Glib::RefPtr<Gio::AsyncResult>& result);
 
     Q_DECLARE_PUBLIC(DGioFile)
 };
@@ -79,6 +82,20 @@ void DGioFilePrivate::slot_enumerateChildrenAsyncResult(const Glib::RefPtr<Async
         Q_EMIT q->createFileIteratorReady(fileIterPtr);
     } catch (const Glib::Error & error) {
         qDebug() << QString::fromStdString(error.what().raw());
+    }
+}
+
+void DGioFilePrivate::slot_mountEnclosingVolumeResult(const Glib::RefPtr<AsyncResult> &result)
+{
+    Q_Q(DGioFile);
+
+    try {
+        bool res = m_gmmFilePtr->mount_enclosing_volume_finish(result);
+
+        Q_EMIT q->mountEnclosingVolumeReady(res, "");
+    } catch (const Glib::Error & error) {
+        qDebug() << QString::fromStdString(error.what().raw());
+        Q_EMIT q->mountEnclosingVolumeReady(false, QString::fromStdString(error.what().raw()));
     }
 }
 
@@ -292,4 +309,12 @@ void DGioFile::createFileIteratorAsync(QString attr, DGioFileQueryInfoFlags quer
     FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
     d->getGmmFileInstance()->enumerate_children_async(sigc::mem_fun(d, &DGioFilePrivate::slot_enumerateChildrenAsyncResult),
                                                       attr.toStdString(), flags);
+}
+
+void DGioFile::mountEnclosingVolume(DGioMountOperation *dgioMountOperation)
+{
+    Q_D(DGioFile);
+
+    d->getGmmFileInstance()->mount_enclosing_volume(dgioMountOperation->getGIOMountOperationObj(),
+                                                    sigc::mem_fun(d, &DGioFilePrivate::slot_mountEnclosingVolumeResult));
 }

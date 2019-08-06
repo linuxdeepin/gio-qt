@@ -200,3 +200,9 @@ void DGioMountOperation::reply(DGioMountOperationResult result)
 
     d->getGmmMountOperationInstance()->reply(static_cast<MountOperationResult>(result));
 }
+
+Glib::RefPtr<MountOperation> DGioMountOperation::getGIOMountOperationObj()
+{
+    Q_D(const DGioMountOperation);
+    return  d->getGmmMountOperationInstance();
+}

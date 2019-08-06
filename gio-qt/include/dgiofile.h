@@ -38,6 +38,7 @@ Q_DECLARE_FLAGS(DGioFileQueryInfoFlags, DGioFileQueryInfoFlag)
 
 class DGioFileInfo;
 class DGioFileIterator;
+class DGioMountOperation;
 class DGioFilePrivate;
 class DGioFile : public QObject, public QSharedData
 {
@@ -58,8 +59,11 @@ public:
     QExplicitlySharedDataPointer<DGioFileIterator> createFileIterator(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
     void createFileIteratorAsync(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
 
+    void mountEnclosingVolume(DGioMountOperation *dgioMountOperation);
+
 Q_SIGNALS:
     void createFileIteratorReady(QExplicitlySharedDataPointer<DGioFileIterator> iter);
+    void mountEnclosingVolumeReady(bool result, QString msg);
 
 private:
     QScopedPointer<DGioFilePrivate> d_ptr;

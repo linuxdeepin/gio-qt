@@ -23,6 +23,14 @@
 
 #include <QObject>
 
+namespace  Glib{
+template <class T_CppObject>
+class RefPtr;
+}
+namespace  Gio{
+class MountOperation;
+}
+
 enum DGioAskPasswordFlag
 {
     ASK_PASSWORD_NEED_PASSWORD = (1 << 0),
@@ -76,6 +84,9 @@ public:
     void setChoice(int choice);
 
     void reply(DGioMountOperationResult result);
+
+    // do not release the ptr returned
+    Glib::RefPtr<Gio::MountOperation> getGIOMountOperationObj();
 
 Q_SIGNALS:
     void askPassword(QString message, QString defaultUser, QString defaultDomain, DGioAskPasswordFlags flags);
