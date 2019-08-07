@@ -13,12 +13,12 @@ public:
 
 private Q_SLOTS:
     void testCase_Settings() {
-        if (DGIOSettings::isSchemaInstalled("com.deepin.dde.appearance") == false) {
+        if (DGioSettings::isSchemaInstalled("com.deepin.dde.appearance") == false) {
             qWarning() << "com.deepin.dde.appearance" << "invalid";
             return;
         }
 
-        DGIOSettings settings("com.deepin.dde.appearance", this);
+        DGioSettings settings("com.deepin.dde.appearance", this);
         QVERIFY(settings.value("background-uris").isValid());
         QVERIFY(settings.value("extra-picture-uris").isValid());
         const QStringList& tmpValue = settings.value("extra-picture-uris").toStringList();

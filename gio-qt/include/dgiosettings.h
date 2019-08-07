@@ -25,15 +25,15 @@
 #include <QObject>
 #include <QScopedPointer>
 
-class DGIOSettingsPrivate;
-class DGIOSettings : public QObject
+class DGioSettingsPrivate;
+class DGioSettings : public QObject
 {
     Q_OBJECT
 public:
-    explicit DGIOSettings(const QString& schemaId, QObject* parent = nullptr);
-    DGIOSettings(const QString& schemaId, const QString& path, QObject* parent = nullptr);
+    explicit DGioSettings(const QString& schemaId, QObject* parent = nullptr);
+    DGioSettings(const QString& schemaId, const QString& path, QObject* parent = nullptr);
 
-    ~DGIOSettings();
+    ~DGioSettings();
 
     void sync();
 
@@ -50,9 +50,9 @@ Q_SIGNALS:
     void valueChanged(const QString& key, const QVariant& value);
 
 private:
-    QScopedPointer<DGIOSettingsPrivate> d_private;
+    QScopedPointer<DGioSettingsPrivate> d_private;
 
-    Q_DECLARE_PRIVATE_D(d_private, DGIOSettings)
+    Q_DECLARE_PRIVATE_D(d_private, DGioSettings)
 };
 
 #endif // DGIOSETTINGS_H

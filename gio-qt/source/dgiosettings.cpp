@@ -170,17 +170,17 @@ static GVariant *qconf_types_collect_from_variant(const GVariantType* gtype, con
     return nullptr;
 }
 
-class DGIOSettingsPrivate
+class DGioSettingsPrivate
 {
 public:
-    DGIOSettingsPrivate(DGIOSettings* qq)
+    DGioSettingsPrivate(DGioSettings* qq)
         : ptr(qq)
     {
     }
 
     QString          schemaId;
     QString          path;
-    DGIOSettings*    ptr;
+    DGioSettings*    ptr;
     GSettings*       settings;
     GSettingsSchema* schema;
     gulong           signalHandlerId;
@@ -219,20 +219,39 @@ public:
     }
 
     static void onSettingChanged(GSettings* settings, const gchar* key, gpointer pointer) {
-        DGIOSettingsPrivate* self = static_cast<DGIOSettingsPrivate*>(pointer);
+        DGioSettingsPrivate* self = static_cast<DGioSettingsPrivate*>(pointer);
         Q_EMIT self->ptr->valueChanged(key, self->value(settings, key));
     }
 };
 
+/*!
+ * \class DGioSettings
+ * \brief Access GSettings in a more Qt way.
+ *
+ * This is not a directly wrapper of Gio::Settings class, so interfaces are not matched to the
+ * giomm ome.
+ */
 
-DGIOSettings::DGIOSettings(const QString& schemaId, QObject* parent)
-    : DGIOSettings(schemaId, QString(), parent)
+/*!
+ * \brief Create a DGioSettings object for a given \a schemaId.
+ *
+ * In case you would like to skip path but provide a \a parent.
+ *
+ * Warning: not existed schemaId will cause the program crashed.
+ */
+DGioSettings::DGioSettings(const QString& schemaId, QObject* parent)
+    : DGioSettings(schemaId, QString(), parent)
 {
 }
 
-DGIOSettings::DGIOSettings(const QString& schemaId, const QString& path, QObject* parent)
+/*!
+ * \brief Create a DGioSettings object for a given \a schemaId and \a path.
+ *
+ * Warning: not existed schemaId will cause the program crashed.
+ */
+DGioSettings::DGioSettings(const QString& schemaId, const QString& path, QObject* parent)
     : QObject(parent)
-    , d_private(new DGIOSettingsPrivate(this))
+    , d_private(new DGioSettingsPrivate(this))
 {
     d_private->schemaId = schemaId;
     d_private->path     = path;
@@ -243,12 +262,12 @@ DGIOSettings::DGIOSettings(const QString& schemaId, const QString& path, QObject
                                                      path.toUtf8().constData());
 
     g_object_get(d_private->settings, "settings-schema", &d_private->schema, nullptr);
-    d_private->signalHandlerId = g_signal_connect(d_private->settings, "changed", G_CALLBACK(DGIOSettingsPrivate::onSettingChanged), d_ptr.data());
+    d_private->signalHandlerId = g_signal_connect(d_private->settings, "changed", G_CALLBACK(DGioSettingsPrivate::onSettingChanged), d_ptr.data());
 }
 
-DGIOSettings::~DGIOSettings()
+DGioSettings::~DGioSettings()
 {
-    Q_D(DGIOSettings);
+    Q_D(DGioSettings);
 
     if (d->schema) {
         g_settings_sync ();
@@ -258,9 +277,27 @@ DGIOSettings::~DGIOSettings()
     }
 }
 
-bool DGIOSettings::setValue(const QString& key, const QVariant& value, bool sync)
+/*!
+ * \brief Sets the value at \a key to \a value
+ *
+ * Not all values that a QVariant can hold can be serialized into a setting. Basic types are supported. the
+ * provided variant value will be converted according to the original GSetting value type.
+ *
+ * List of supported types:
+ *
+ * - boolean
+ * - byte/char
+ * - int, uint, long long
+ * - double
+ * - string
+ * - string list.
+ *
+ * \param sync call sync() after value applied if success.
+ * \return true if success, false if failed.
+ */
+bool DGioSettings::setValue(const QString& key, const QVariant& value, bool sync)
 {
-    Q_D(DGIOSettings);
+    Q_D(DGioSettings);
 
     if (!d->trySet(key, value)) {
         qWarning() << QString("unable to set key %1 to value %2").arg(key).arg(value.toString());
@@ -274,16 +311,25 @@ bool DGIOSettings::setValue(const QString& key, const QVariant& value, bool sync
     return true;
 }
 
-QVariant DGIOSettings::value(const QString& key) const
+QVariant DGioSettings::value(const QString& key) const
 {
-    Q_D(const DGIOSettings);
+    Q_D(const DGioSettings);
 
     return d->value(d->settings, key);
 }
 
-QStringList DGIOSettings::keys() const
+/*!
+ * \brief Retrieves the list of avaliable keys
+ *
+ * According to g_settings_list_keys() document: You should probably not be calling this function
+ * from "normal" code (since you should already know what keys are in your schema). This function
+ * is intended for introspection reasons.
+ *
+ * Thus we also mark this function as DEPRECATED just like what glib does.
+ */
+QStringList DGioSettings::keys() const
 {
-    Q_D(const DGIOSettings);
+    Q_D(const DGioSettings);
 
     QStringList list;
     gchar** keys = g_settings_list_keys(d->settings);
@@ -297,21 +343,21 @@ QStringList DGIOSettings::keys() const
     return list;
 }
 
-void DGIOSettings::reset(const QString& key)
+void DGioSettings::reset(const QString& key)
 {
-    Q_D(DGIOSettings);
+    Q_D(DGioSettings);
 
     g_settings_reset(d->settings, key.toUtf8().constData());
 }
 
-void DGIOSettings::sync()
+void DGioSettings::sync()
 {
-    Q_D(DGIOSettings);
+    Q_D(DGioSettings);
 
     d->sync();
 }
 
-bool DGIOSettings::isSchemaInstalled(const QString& schemaId)
+bool DGioSettings::isSchemaInstalled(const QString& schemaId)
 {
     GSettingsSchemaSource* source = g_settings_schema_source_get_default();
 
