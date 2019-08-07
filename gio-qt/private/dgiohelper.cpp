@@ -73,5 +73,15 @@ QStringList getThemedIconNames(Glib::RefPtr<const Gio::Icon> icon)
     return iconNames;
 }
 
+gchar *converToGChar(const QByteArray &array) {
+    GString *str = g_string_new(nullptr);
+
+    for (const QChar c : array) {
+        g_string_append_c(str, c.toLower().toLatin1());
+    }
+
+    return g_string_free(str, FALSE);
+}
+
 }
 

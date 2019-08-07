@@ -23,3 +23,5 @@ dgio_create_test (tst_matchgioenum tst_matchgioenum.cpp YES)
 
 # Simple FileInfo
 dgio_create_test (tst_simplefileinfo tst_simplefileinfo.cpp NO)
+
+dgio_create_test (tst_dgiosettings tst_dgiosettings.cpp NO)

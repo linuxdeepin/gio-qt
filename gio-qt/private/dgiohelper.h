@@ -27,6 +27,7 @@
 
 namespace DGioPrivate {
     QStringList getThemedIconNames(Glib::RefPtr<const Gio::Icon> icon);
+    gchar * converToGChar(const QByteArray& array);
 }
 
 #endif // DGIOHELPER_H
