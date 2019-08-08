@@ -15,7 +15,7 @@ Homepage: https://github.com/linuxdeepin/gio-qt
 
 Package: libgio-qt
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, libglibmm-2.4-1v5
 Description: Gio wrapper for Qt.
 
 Package: libgio-qt-dev
