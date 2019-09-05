@@ -1,2 +1,5 @@
 # User
 *.user
+
+# Build directory
+build/

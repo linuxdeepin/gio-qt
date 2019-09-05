@@ -123,7 +123,10 @@ int main(int argc, char * argv[])
     const QList<QExplicitlySharedDataPointer<DGioVolume> > vols = DGioVolumeManager::getVolumes();
 
     for (const QExplicitlySharedDataPointer<DGioVolume> &p : vols) {
-        qDebug() << p->name();
+        qDebug() << p->name()
+                 << p->identifier(DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_UUID)
+                 << p->identifier(DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_CLASS)
+                 << p->identifier(DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_LABEL);
     }
 
     qDebug() << "----------drives------------";

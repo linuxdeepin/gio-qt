@@ -28,6 +28,14 @@ namespace Gio {
 class Volume;
 }
 
+enum DGioVolumeIdentifierType {
+    VOLUME_IDENTIFIER_TYPE_LABEL,
+    VOLUME_IDENTIFIER_TYPE_NFS_MOUNT,
+    VOLUME_IDENTIFIER_TYPE_UUID,
+    VOLUME_IDENTIFIER_TYPE_CLASS
+};
+Q_ENUMS(DGioVolumeIdentifierType);
+
 class DGioMount;
 class DGioVolumePrivate;
 class DGioVolume : public QObject, public QSharedData
@@ -43,6 +51,8 @@ public:
     bool shouldAutoMount() const;
 
     QExplicitlySharedDataPointer<DGioMount> getMount();
+
+    QString identifier(DGioVolumeIdentifierType id) const;
 
 private:
     QScopedPointer<DGioVolumePrivate> d_ptr;

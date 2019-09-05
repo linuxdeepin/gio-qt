@@ -115,3 +115,17 @@ QExplicitlySharedDataPointer<DGioMount> DGioVolume::getMount()
 
     return mntPtr;
 }
+
+QString DGioVolume::identifier(DGioVolumeIdentifierType id) const
+{
+    Q_D(const DGioVolume);
+
+    const static QHash<DGioVolumeIdentifierType, std::string> idtmap = {
+        {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_LABEL, G_VOLUME_IDENTIFIER_KIND_LABEL},
+        {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_NFS_MOUNT, G_VOLUME_IDENTIFIER_KIND_NFS_MOUNT},
+        {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_UUID, G_VOLUME_IDENTIFIER_KIND_UUID},
+        {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_CLASS, G_VOLUME_IDENTIFIER_KIND_CLASS}
+    };
+
+    return QString::fromStdString(d->getGmmVolumeInstance()->get_identifier(idtmap[id]));
+}
