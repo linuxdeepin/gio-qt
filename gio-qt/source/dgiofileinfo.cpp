@@ -207,3 +207,10 @@ quint64 DGioFileInfo::fsFreeBytes() const
 
     return d->getAttributeUint64(G_FILE_ATTRIBUTE_FILESYSTEM_FREE);
 }
+
+QString DGioFileInfo::fsType() const
+{
+    Q_D(const DGioFileInfo);
+
+    return d->getAttributeString(G_FILE_ATTRIBUTE_FILESYSTEM_TYPE);
+}

@@ -60,6 +60,7 @@ public:
     quint64 fsTotalBytes() const;
     quint64 fsUsedBytes() const;
     quint64 fsFreeBytes() const;
+    QString fsType() const;
 
 private:
     QScopedPointer<DGioFileInfoPrivate> d_ptr;
