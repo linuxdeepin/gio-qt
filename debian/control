@@ -21,7 +21,7 @@ Description: Gio wrapper for Qt.
 Package: libgio-qt-dev
 Architecture: any
 Section: libdevel
-Depends: libgio-qt, ${misc:Depends}
+Depends: libgio-qt, ${misc:Depends}, libglibmm-2.4-dev
 Description: Development package for libgio-qt.
 
 Package: libgio-qt-doc
