@@ -29,6 +29,10 @@
 #include <giomm/fileenumerator.h>
 
 #include <QDebug>
+#include <QWaitCondition>
+#include <QMutex>
+#include <QTime>
+#include <QtConcurrent/QtConcurrentRun>
 #include <dgiomountoperation.h>
 
 using namespace Gio;
@@ -223,15 +227,28 @@ QString DGioFile::uri() const
  *
  * \return the created file info object, or nullptr if create failed.
  */
-QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileInfo(QString attr, DGioFileQueryInfoFlags queryInfoFlags)
+QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileInfo(QString attr, DGioFileQueryInfoFlags queryInfoFlags, unsigned long timeout_msec)
 {
     Q_D(DGioFile);
 
     try {
         unsigned int flagValue = queryInfoFlags;
         FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
-        Glib::RefPtr<FileInfo> gmmFileInfo = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);
-        if (gmmFileInfo) {
+        Glib::RefPtr<FileInfo> gmmFileInfo;
+        QWaitCondition cond;
+        QtConcurrent::run([&] {
+            QTime t;
+            t.start();
+            gmmFileInfo = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);
+            if (t.elapsed() < timeout_msec) {
+                cond.wakeAll();
+            }
+        });
+        QMutex m;
+        m.lock();
+        bool finished = cond.wait(&m, timeout_msec);
+        m.unlock();
+        if (finished && gmmFileInfo) {
             QExplicitlySharedDataPointer<DGioFileInfo> fileInfoPtr(new DGioFileInfo(gmmFileInfo.release()));
             return fileInfoPtr;
         }
