@@ -262,7 +262,7 @@ DGioSettings::DGioSettings(const QString& schemaId, const QString& path, QObject
                                                      path.toUtf8().constData());
 
     g_object_get(d_private->settings, "settings-schema", &d_private->schema, nullptr);
-    d_private->signalHandlerId = g_signal_connect(d_private->settings, "changed", G_CALLBACK(DGioSettingsPrivate::onSettingChanged), d_ptr.data());
+    d_private->signalHandlerId = g_signal_connect(d_private->settings, "changed", G_CALLBACK(DGioSettingsPrivate::onSettingChanged), d_private.data());
 }
 
 DGioSettings::~DGioSettings()
