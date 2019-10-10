@@ -246,7 +246,7 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileInfo(QString attr
         });
         QMutex m;
         m.lock();
-        bool finished = cond.wait(&m, timeout_msec);
+        bool finished = gmmFileInfo || cond.wait(&m, timeout_msec);
         m.unlock();
         if (finished && gmmFileInfo) {
             QExplicitlySharedDataPointer<DGioFileInfo> fileInfoPtr(new DGioFileInfo(gmmFileInfo.release()));
