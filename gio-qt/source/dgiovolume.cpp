@@ -84,6 +84,17 @@ QString DGioVolume::name() const
     return d->name();
 }
 
+QString DGioVolume::volumeMonitorName() const
+{
+    Q_D(const DGioVolume);
+
+    if (QString(G_OBJECT_CLASS_NAME(G_OBJECT_GET_CLASS(d->m_gmmVolumePtr->gobj()))) == "GProxyVolume") {
+        return (const char*)g_object_get_data(G_OBJECT(d->m_gmmVolumePtr->gobj()), "g-proxy-volume-volume-monitor-name");
+    }
+
+    return "";
+}
+
 bool DGioVolume::canMount() const
 {
     Q_D(const DGioVolume);
