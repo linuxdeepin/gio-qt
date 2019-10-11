@@ -123,6 +123,7 @@ QString DGioVolume::identifier(DGioVolumeIdentifierType id) const
     const static QHash<DGioVolumeIdentifierType, std::string> idtmap = {
         {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_LABEL, G_VOLUME_IDENTIFIER_KIND_LABEL},
         {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_NFS_MOUNT, G_VOLUME_IDENTIFIER_KIND_NFS_MOUNT},
+        {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_UNIX_DEVICE, G_VOLUME_IDENTIFIER_KIND_UNIX_DEVICE},
         {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_UUID, G_VOLUME_IDENTIFIER_KIND_UUID},
         {DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_CLASS, G_VOLUME_IDENTIFIER_KIND_CLASS}
     };
