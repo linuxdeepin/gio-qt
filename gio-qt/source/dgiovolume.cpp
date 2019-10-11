@@ -116,6 +116,13 @@ bool DGioVolume::shouldAutoMount() const
     return d->getGmmVolumeInstance()->should_automount();
 }
 
+void DGioVolume::mount() const
+{
+    Q_D(const DGioVolume);
+
+    d->getGmmVolumeInstance()->mount();
+}
+
 // Return value can be nullptr
 QExplicitlySharedDataPointer<DGioMount> DGioVolume::getMount()
 {

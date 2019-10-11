@@ -51,6 +51,7 @@ public:
     bool canMount() const;
     bool canEject() const;
     bool shouldAutoMount() const;
+    void mount() const;
 
     QExplicitlySharedDataPointer<DGioMount> getMount();
 
