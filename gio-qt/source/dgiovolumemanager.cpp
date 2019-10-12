@@ -52,6 +52,8 @@ private:
     void slot_driveDisconnected(const Glib::RefPtr< Drive >& gmmDrive);
     void slot_driveChanged(const Glib::RefPtr< Drive >& gmmDrive);
 
+    QList<sigc::connection> m_connections;
+
     Q_DECLARE_PUBLIC(DGioVolumeManager)
 };
 
@@ -64,23 +66,25 @@ DGioVolumeManagerPrivate::DGioVolumeManagerPrivate(DGioVolumeManager *qq)
 
     m_gmmVolumeMonitorPtr = VolumeMonitor::get();
 
-    m_gmmVolumeMonitorPtr->signal_mount_added().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountAdded));
-    m_gmmVolumeMonitorPtr->signal_mount_removed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountRemoved));
-    m_gmmVolumeMonitorPtr->signal_mount_pre_unmount().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountPreRemoved));
-    m_gmmVolumeMonitorPtr->signal_mount_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountChanged));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_mount_added().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountAdded)));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_mount_removed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountRemoved)));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_mount_pre_unmount().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountPreRemoved)));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_mount_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_mountChanged)));
 
-    m_gmmVolumeMonitorPtr->signal_volume_added().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeAdded));
-    m_gmmVolumeMonitorPtr->signal_volume_removed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeRemoved));
-    m_gmmVolumeMonitorPtr->signal_volume_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeChanged));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_volume_added().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeAdded)));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_volume_removed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeRemoved)));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_volume_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_volumeChanged)));
 
-    m_gmmVolumeMonitorPtr->signal_drive_connected().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveConnected));
-    m_gmmVolumeMonitorPtr->signal_drive_disconnected().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveDisconnected));
-    m_gmmVolumeMonitorPtr->signal_drive_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveChanged));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_drive_connected().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveConnected)));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_drive_disconnected().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveDisconnected)));
+    m_connections.append(m_gmmVolumeMonitorPtr->signal_drive_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveChanged)));
 }
 
 DGioVolumeManagerPrivate::~DGioVolumeManagerPrivate()
 {
-
+    for (auto & c : m_connections) {
+        c.disconnect();
+    }
 }
 
 void DGioVolumeManagerPrivate::slot_mountAdded(const Glib::RefPtr<Mount> &gmmMount)
