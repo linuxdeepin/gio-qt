@@ -32,7 +32,9 @@ using namespace Gio;
 
 class DGioVolumeManagerPrivate
 {
+public:
     DGioVolumeManagerPrivate(DGioVolumeManager *qq);
+    ~DGioVolumeManagerPrivate();
 
 private:
     Glib::RefPtr<VolumeMonitor> m_gmmVolumeMonitorPtr;
@@ -74,6 +76,11 @@ DGioVolumeManagerPrivate::DGioVolumeManagerPrivate(DGioVolumeManager *qq)
     m_gmmVolumeMonitorPtr->signal_drive_connected().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveConnected));
     m_gmmVolumeMonitorPtr->signal_drive_disconnected().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveDisconnected));
     m_gmmVolumeMonitorPtr->signal_drive_changed().connect(sigc::mem_fun(*this, &DGioVolumeManagerPrivate::slot_driveChanged));
+}
+
+DGioVolumeManagerPrivate::~DGioVolumeManagerPrivate()
+{
+
 }
 
 void DGioVolumeManagerPrivate::slot_mountAdded(const Glib::RefPtr<Mount> &gmmMount)
