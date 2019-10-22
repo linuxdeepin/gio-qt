@@ -239,7 +239,12 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileInfo(QString attr
         QtConcurrent::run([&] {
             QTime t;
             t.start();
-            gmmFileInfo = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);
+            try {
+                gmmFileInfo = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);
+            } catch (const Glib::Error &error) {
+                qDebug() << QString::fromStdString(error.what().raw());
+            }
+
             if (t.elapsed() < timeout_msec) {
                 cond.wakeAll();
             }
