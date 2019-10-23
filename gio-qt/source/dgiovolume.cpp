@@ -129,7 +129,7 @@ QExplicitlySharedDataPointer<DGioMount> DGioVolume::getMount()
     Q_D(DGioVolume);
 
     Glib::RefPtr<Mount> mnt = d->getGmmVolumeInstance()->get_mount();
-    QExplicitlySharedDataPointer<DGioMount> mntPtr(new DGioMount(mnt.release()));
+    QExplicitlySharedDataPointer<DGioMount> mntPtr(mnt ? new DGioMount(mnt.release()) : nullptr);
 
     return mntPtr;
 }
