@@ -84,6 +84,13 @@ QString DGioVolume::name() const
     return d->name();
 }
 
+QString DGioVolume::volumeClass() const
+{
+    Q_D(const DGioVolume);
+
+    return QString(G_OBJECT_CLASS_NAME(G_OBJECT_GET_CLASS(d->m_gmmVolumePtr->gobj())));
+}
+
 QString DGioVolume::volumeMonitorName() const
 {
     Q_D(const DGioVolume);

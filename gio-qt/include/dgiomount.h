@@ -42,6 +42,7 @@ public:
 
     QString name() const;
     QString uuid() const;
+    QString mountClass() const;
     bool isShadowed() const;
     bool canUnmount() const;
     bool canEject() const;

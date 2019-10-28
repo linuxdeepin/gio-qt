@@ -130,6 +130,13 @@ QString DGioMount::uuid() const
     return d->uuid();
 }
 
+QString DGioMount::mountClass() const
+{
+    Q_D(const DGioMount);
+
+    return QString(G_OBJECT_CLASS_NAME(G_OBJECT_GET_CLASS(d->m_gmmMountPtr->gobj())));
+}
+
 /*!
  * \brief Determines if mount is shadowed.
  *

@@ -115,7 +115,7 @@ int main(int argc, char * argv[])
         QExplicitlySharedDataPointer<DGioFile> f2 = p->getDefaultLocationFile();
         qDebug() << f->uri() << f2->uri() << f->path() << f2->path();
         qDebug() << f->uri() << f2->uri();
-        qDebug() << p->name() << p->uuid() << p->canUnmount() << p->themedIconNames() << p->themedIconNames();
+        qDebug() << p->name() << p->uuid() << p->mountClass() << p->canUnmount() << p->themedIconNames() << p->themedIconNames();
     }
 
     qDebug() << "--------volumes--------------";
@@ -123,7 +123,7 @@ int main(int argc, char * argv[])
     const QList<QExplicitlySharedDataPointer<DGioVolume> > vols = DGioVolumeManager::getVolumes();
 
     for (const QExplicitlySharedDataPointer<DGioVolume> &p : vols) {
-        qDebug() << p->name() << p->volumeMonitorName()
+        qDebug() << p->name() << p->volumeClass() << p->volumeMonitorName()
                  << p->identifier(DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_UUID)
                  << p->identifier(DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_CLASS)
                  << p->identifier(DGioVolumeIdentifierType::VOLUME_IDENTIFIER_TYPE_LABEL)

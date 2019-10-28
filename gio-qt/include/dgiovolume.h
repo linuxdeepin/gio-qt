@@ -47,6 +47,7 @@ public:
     ~DGioVolume();
 
     QString name() const;
+    QString volumeClass() const;
     QString volumeMonitorName() const;
     bool canMount() const;
     bool canEject() const;
