@@ -235,24 +235,27 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileInfo(QString attr
         unsigned int flagValue = queryInfoFlags;
         FileQueryInfoFlags flags = static_cast<FileQueryInfoFlags>(flagValue);
         Glib::RefPtr<FileInfo> gmmFileInfo;
-        QWaitCondition cond;
-        QtConcurrent::run([&] {
+        QSharedPointer<QWaitCondition> cond(new QWaitCondition);
+        QSharedPointer<QMutex> m(new QMutex);
+        QtConcurrent::run([&, cond, m, timeout_msec] {
+            Glib::RefPtr<FileInfo> localret;
             QTime t;
             t.start();
             try {
-                gmmFileInfo = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);
+                localret = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);
             } catch (const Glib::Error &error) {
                 qDebug() << QString::fromStdString(error.what().raw());
+                return;
             }
 
             if (t.elapsed() < timeout_msec) {
-                cond.wakeAll();
+                gmmFileInfo = localret;
+                cond->wakeAll();
             }
         });
-        QMutex m;
-        m.lock();
-        bool finished = gmmFileInfo || cond.wait(&m, timeout_msec);
-        m.unlock();
+        m->lock();
+        bool finished = gmmFileInfo || cond->wait(m.data(), timeout_msec);
+        m->unlock();
         if (finished && gmmFileInfo) {
             QExplicitlySharedDataPointer<DGioFileInfo> fileInfoPtr(new DGioFileInfo(gmmFileInfo.release()));
             return fileInfoPtr;
