@@ -21,6 +21,7 @@
 #include "dgiofile.h"
 #include "dgiofileinfo.h"
 #include "dgiofileiterator.h"
+#include "dgiomount.h"
 
 #include <glibmm/refptr.h>
 
@@ -342,4 +343,16 @@ void DGioFile::mountEnclosingVolume(DGioMountOperation *dgioMountOperation)
 
     d->getGmmFileInstance()->mount_enclosing_volume(dgioMountOperation->getGIOMountOperationObj(),
                                                     sigc::mem_fun(d, &DGioFilePrivate::slot_mountEnclosingVolumeResult));
+}
+
+QExplicitlySharedDataPointer<DGioMount> DGioFile::findEnclosingMount()
+{
+    Q_D(DGioFile);
+    QExplicitlySharedDataPointer<DGioMount> ret;
+    try {
+        ret = new DGioMount(d->getGmmFileInstance()->find_enclosing_mount().release());
+    } catch (const Glib::Error &error) {
+        qDebug() << QString::fromStdString(error.what().raw());
+    }
+    return ret;
 }

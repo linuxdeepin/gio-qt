@@ -37,6 +37,7 @@ enum DGioFileQueryInfoFlag
 Q_DECLARE_FLAGS(DGioFileQueryInfoFlags, DGioFileQueryInfoFlag)
 
 class DGioFileInfo;
+class DGioMount;
 class DGioFileIterator;
 class DGioMountOperation;
 class DGioFilePrivate;
@@ -61,6 +62,8 @@ public:
     void createFileIteratorAsync(QString attr = "*", DGioFileQueryInfoFlags queryInfoFlags = FILE_QUERY_INFO_NONE);
 
     void mountEnclosingVolume(DGioMountOperation *dgioMountOperation);
+
+    QExplicitlySharedDataPointer<DGioMount> findEnclosingMount();
 
 Q_SIGNALS:
     void createFileIteratorReady(QExplicitlySharedDataPointer<DGioFileIterator> iter);
