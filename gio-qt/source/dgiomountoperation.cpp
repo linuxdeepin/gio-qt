@@ -26,8 +26,11 @@ using namespace Gio;
 
 class DGioMountOperationPrivate
 {
+public:
     DGioMountOperationPrivate(DGioMountOperation *qq);
+    ~DGioMountOperationPrivate();
 
+private:
     Glib::RefPtr<MountOperation> getGmmMountOperationInstance() const;
 
     QString username() const;
@@ -35,6 +38,8 @@ class DGioMountOperationPrivate
     void slot_askPassword(const Glib::ustring& message, const Glib::ustring& default_user, const Glib::ustring& default_domain, AskPasswordFlags flags);
     void slot_askQuestion(const Glib::ustring& message, const Glib::StringArrayHandle& choices);
     void slot_showUnmountProgress(const Glib::ustring &message, gint64 time_left, gint64 bytes_left);
+
+    QList<sigc::connection> m_connections;
 
 private:
     Glib::RefPtr<MountOperation> m_gmmMountOperationPtr;
@@ -49,9 +54,16 @@ DGioMountOperationPrivate::DGioMountOperationPrivate(DGioMountOperation *qq)
 {
     m_gmmMountOperationPtr = Gio::MountOperation::create();
 
-    m_gmmMountOperationPtr->signal_ask_password().connect(sigc::mem_fun(*this, &DGioMountOperationPrivate::slot_askPassword));
-    m_gmmMountOperationPtr->signal_ask_question().connect(sigc::mem_fun(*this, &DGioMountOperationPrivate::slot_askQuestion));
-    m_gmmMountOperationPtr->signal_show_unmount_progress().connect(sigc::mem_fun(*this, &DGioMountOperationPrivate::slot_showUnmountProgress));
+    m_connections.append(m_gmmMountOperationPtr->signal_ask_password().connect(sigc::mem_fun(*this, &DGioMountOperationPrivate::slot_askPassword)));
+    m_connections.append(m_gmmMountOperationPtr->signal_ask_question().connect(sigc::mem_fun(*this, &DGioMountOperationPrivate::slot_askQuestion)));
+    m_connections.append(m_gmmMountOperationPtr->signal_show_unmount_progress().connect(sigc::mem_fun(*this, &DGioMountOperationPrivate::slot_showUnmountProgress)));
+}
+
+DGioMountOperationPrivate::~DGioMountOperationPrivate()
+{
+    for (auto & c : m_connections) {
+        c.disconnect();
+    }
 }
 
 Glib::RefPtr<MountOperation> DGioMountOperationPrivate::getGmmMountOperationInstance() const
