@@ -136,7 +136,7 @@ int main(int argc, char * argv[])
     const QList<QExplicitlySharedDataPointer<DGioDrive> > drvs = DGioVolumeManager::getDrives();
 
     for (const QExplicitlySharedDataPointer<DGioDrive> &p : drvs) {
-        qDebug() << p->name();
+        qDebug() << p->name() << p->isRemovable() << p->isMediaRemovable();
     }
 
     qDebug() << "----------------------";

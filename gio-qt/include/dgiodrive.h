@@ -31,7 +31,7 @@ class Drive;
 }
 
 class DGioDrivePrivate;
-class DGioDrive : public QObject, public QSharedData{
+class DGioDrive : public QObject, public QSharedData {
     Q_OBJECT
 public:
     explicit DGioDrive(Gio::Drive *gmmDrivePtr, QObject *parent = nullptr);
@@ -43,6 +43,8 @@ public:
     bool canStart() const;
     bool canStop() const;
     bool canEject() const;
+    bool isMediaRemovable() const;
+    bool isRemovable() const;
 
 private:
     QScopedPointer<DGioDrivePrivate> d_ptr;

@@ -108,3 +108,33 @@ bool DGioDrive::canEject() const
 
     return d->getGmmDriveInstence()->can_eject();
 }
+
+/*!
+ * \brief Checks if the drive supports removable media.
+ *
+ * Wrapper of Gio::Drive::is_media_removable()
+ *
+ * \return true if drive supports removable media, false otherwise.
+ */
+bool DGioDrive::isMediaRemovable() const
+{
+    Q_D(const DGioDrive);
+
+    return d->getGmmDriveInstence()->is_media_removable();
+}
+
+/*!
+ * \brief Checks if the drive and/or its media is considered removable by the user.
+ *
+ * Wrapper of Gio::Drive::is_removable()
+ *
+ * \return true if drive and/or its media is considered removable, false otherwise.
+ *
+ * \sa isMediaRemovable()
+ */
+bool DGioDrive::isRemovable() const
+{
+    Q_D(const DGioDrive);
+
+    return d->getGmmDriveInstence()->is_removable();
+}
