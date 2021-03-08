@@ -185,8 +185,33 @@ public:
     GSettingsSchema* schema;
     gulong           signalHandlerId;
 
+    bool strvHasString (gchar **haystack, const gchar *needle) const {
+        if (needle == nullptr) return false;
+
+        for (guint n = 0; haystack != NULL && haystack[n] != NULL; n++) {
+            if (g_strcmp0 (haystack[n], needle) == 0)
+                return true;
+        }
+
+        return false;
+    }
+
+    bool inlcudeKey(const gchar* gkey) const {
+        gchar **allKeys = g_settings_list_keys(settings);
+        bool ret = strvHasString (allKeys, gkey);
+        g_strfreev (allKeys);
+
+        return ret;
+    }
+
     QVariant value(GSettings* gsettings, const QString& key) const {
         gchar* gkey = DGioPrivate::converToGChar(key.toUtf8());
+
+        if(!inlcudeKey(gkey)) {
+            g_free(gkey);
+            return QVariant();
+        }
+
         GVariant* variant = g_settings_get_value(gsettings, gkey);
         QVariant qvalue = qconf_types_to_qvariant(variant);
         g_variant_unref(variant);
@@ -198,6 +223,9 @@ public:
     bool trySet(const QString& key, const QVariant& value)
     {
         const gchar* gkey = key.toUtf8().constData();
+
+        if(!inlcudeKey(gkey)) return false;
+
         bool success = false;
 
         /* fetch current value to find out the exact type */
