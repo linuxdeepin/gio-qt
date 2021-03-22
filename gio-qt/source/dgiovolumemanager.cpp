@@ -85,6 +85,7 @@ DGioVolumeManagerPrivate::~DGioVolumeManagerPrivate()
     for (auto & c : m_connections) {
         c.disconnect();
     }
+    m_gmmVolumeMonitorPtr.release();
 }
 
 void DGioVolumeManagerPrivate::slot_mountAdded(const Glib::RefPtr<Mount> &gmmMount)
