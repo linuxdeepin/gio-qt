@@ -55,7 +55,7 @@ PUBLIC
     ${CMAKE_CURRENT_LIST_DIR}/include
 )
 
-target_link_libraries (gio-qt Qt5::Core ${GIOMM_LIBRARIES})
+target_link_libraries (gio-qt Qt::Core ${GIOMM_LIBRARIES})
 
 target_compile_definitions(gio-qt PRIVATE
     QT_NO_KEYWORDS
