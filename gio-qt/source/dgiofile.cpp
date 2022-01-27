@@ -240,7 +240,7 @@ QExplicitlySharedDataPointer<DGioFileInfo> DGioFile::createFileInfo(QString attr
         QSharedPointer<QMutex> m(new QMutex);
         QtConcurrent::run([&, cond, m, timeout_msec] {
             Glib::RefPtr<FileInfo> localret;
-            QTime t;
+            QElapsedTimer t;
             t.start();
             try {
                 localret = d->getGmmFileInstance()->query_info(attr.toStdString(), flags);

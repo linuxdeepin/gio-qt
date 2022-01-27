@@ -24,6 +24,8 @@
 #include <QObject>
 #include <QSharedData>
 
+#include <climits>
+
 namespace Gio {
 class File;
 }
