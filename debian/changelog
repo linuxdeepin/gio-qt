@@ -1,3 +1,9 @@
+gio-qt (0.0.12) unstable; urgency=medium
+
+  * update changelog.
+
+ -- LiChengGang <lichenggang@uniontech.com>  Wed, 29 Mar 2023 14:10:29 +0800
+
 gio-qt (0.0.1) unstable; urgency=medium
 
   * Initial release
