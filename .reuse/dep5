@@ -3,8 +3,8 @@ Upstream-Name: gio-qt
 Upstream-Contact: UnionTech Software Technology Co., Ltd. <>
 Source: https://github.com/linuxdeepin/gio-qt
 
-# github gitignore
-Files: .github/* .gitignore
+# github gitignore obs
+Files: .github/* .gitignore .obs/*
 Copyright: None
 License: CC0-1.0
 
