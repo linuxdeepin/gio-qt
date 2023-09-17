@@ -139,7 +139,7 @@ QString DGioFileInfo::contentType() const
  *
  * Wrapper of Gio::FileInfo::get_icon() and then Gio::Icon::to_string().
  *
- * Notice the returned value can be in two different form:
+ * Notice the returned value can be in two different forms:
  *
  *  - a native path (such as "/path/to/my icon.png") without escaping if the file for icon is a native
  *    file. If the file is not native, the returned string is the result of g_file_get_uri()
@@ -148,7 +148,7 @@ QString DGioFileInfo::contentType() const
  *  - a icon name if icon is a ThemedIcon with exactly one name, the encoding is simply the name (such as
  *    network-server), or a list of theme names (such as ". GThemedIcon text-plain text-x-generic text-plain-symbolic").
  *
- * \return the icon string as discribed above.
+ * \return the icon string as described above.
  */
 QString DGioFileInfo::iconString() const
 {
