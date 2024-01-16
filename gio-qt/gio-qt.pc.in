@@ -6,7 +6,7 @@ includedir=${prefix}/include
 Name: gio-qt
 Description: Qt wrapper library for GIO.
 Version: @PROJECT_VERSION@
-Requires: glibmm-2.4, Qt5Core
+Requires: glibmm-2.4, Qt@QT5_MINIMUM_VERSION@Core
 
 Libs: -L${libdir} -lgio-qt
 Cflags: -I${includedir} -I${includedir}/gio-qt

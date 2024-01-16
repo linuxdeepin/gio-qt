@@ -10,7 +10,7 @@ function(DGIO_CREATE_TEST _generated_target_name _input_file_name _use_giomm)
         ${_input_file_name}
     )
     add_test (NAME ${_generated_target_name} COMMAND ${_generated_target_name} )
-    target_link_libraries (${_generated_target_name} gio-qt Qt5::Test ${extra_libraries})
+    target_link_libraries (${_generated_target_name} gio-qt Qt::Test ${extra_libraries})
     if (_use_giomm)
         target_include_directories(${_generated_target_name} PRIVATE ${GIOMM_INCLUDE_DIRS})
         target_compile_definitions(${_generated_target_name} PRIVATE QT_NO_KEYWORDS)
