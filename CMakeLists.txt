@@ -1,6 +1,6 @@
-project(gio-qt)
-
 cmake_minimum_required(VERSION 3.12.4)
+
+project(gio-qt)
 
 option(BUILD_TESTS "Build tests" OFF)
 option(BUILD_UTILS "Build utilities" ON)
@@ -29,17 +29,9 @@ endif ()
 
 include(GNUInstallDirs)
 
-# Find the QtWidgets library
-find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED Core)
-find_package(PkgConfig REQUIRED)
-find_package(Doxygen)
-
-pkg_check_modules(GIOMM giomm-2.4) # look into FindPkgConfig.cmake
-
-add_subdirectory (gio-qt)
+add_subdirectory(gio-qt)
 
 if (BUILD_TESTS)
-    find_package(Qt5 ${QT_MINIMUM_VERSION} CONFIG REQUIRED Test)
     add_subdirectory(test)
 endif ()
 
@@ -48,6 +40,7 @@ if (BUILD_UTILS)
 endif ()
 
 if (BUILD_DOCS)
+    find_package(Doxygen)
     if (NOT DOXYGEN_FOUND)
         message(FATAL_ERROR "Doxygen is required to build the documentation.")
     endif ()
@@ -70,7 +63,6 @@ if (BUILD_DOCS)
     )
 
     install (FILES ${CMAKE_CURRENT_BINARY_DIR}/docs/gio-qt.qch DESTINATION share/qt5/doc)
-
 else ()
     message (STATUS "")
     message (STATUS "To build docs, please use -DBUILD_DOCS=Yes")

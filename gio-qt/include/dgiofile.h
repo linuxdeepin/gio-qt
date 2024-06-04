@@ -8,6 +8,8 @@
 #include <QObject>
 #include <QSharedData>
 
+#include <limits.h>
+
 namespace Gio {
 class File;
 }

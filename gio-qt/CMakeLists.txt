@@ -1,7 +1,9 @@
 # Populate a CMake variable with the sources
 # TODO: portable headers?
 
-configure_file ("gio-qt.pc.in" "gio-qt.pc" @ONLY)
+find_package(PkgConfig REQUIRED)
+
+pkg_check_modules(GIOMM giomm-2.4) # look into FindPkgConfig.cmake
 
 set (QGIO_PUBLIC_HEADER_FILES
     include/dglibutils.h
@@ -34,40 +36,9 @@ set (QGIO_PRIVATE_CPP_FILES
     private/dgiohelper.cpp
 )
 
-# Library
-add_library (gio-qt SHARED
-    ${QGIO_PUBLIC_HEADER_FILES}
-    ${QGIO_PRIVATE_HEADER_FILES}
-    ${QGIO_PRIVATE_CPP_FILES}
-)
+include(qt6.cmake)
+include(qt5.cmake)
 
-set_target_properties(
-    gio-qt PROPERTIES
-    VERSION ${PROJECT_VERSION}
-    SOVERSION ${PROJECT_VERSION_MAJOR}
-)
-
-target_include_directories(gio-qt
-PRIVATE
-    ${GIOMM_INCLUDE_DIRS}
-    ${CMAKE_CURRENT_LIST_DIR}/private
-PUBLIC
-    ${CMAKE_CURRENT_LIST_DIR}/include
-)
-
-target_link_libraries (gio-qt Qt5::Core ${GIOMM_LIBRARIES})
-
-target_compile_definitions(gio-qt PRIVATE
-    QT_NO_KEYWORDS
-)
-
-## dev files
 install (FILES ${QGIO_PUBLIC_HEADER_FILES}
     DESTINATION include/gio-qt
-)
-
-install_targets ("/${CMAKE_INSTALL_LIBDIR}" gio-qt)
-
-install (FILES "${CMAKE_CURRENT_BINARY_DIR}/gio-qt.pc"
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/pkgconfig
 )

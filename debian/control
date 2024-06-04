@@ -3,14 +3,15 @@ Section: libs
 Priority: optional
 Maintainer: Gary Wang <wzc782970009@gmail.com>
 Build-Depends:
- debhelper (>= 9),
+ debhelper (>= 11),
  cmake,
  pkg-config,
  qtbase5-dev,
- qt5-qmake,
+ qttools5-dev-tools,
+ qt6-base-dev,
+ qt6-tools-dev-tools,
  libglibmm-2.4-dev,
- doxygen,
- qttools5-dev-tools
+ doxygen
 Standards-Version: 3.9.8
 Homepage: https://github.com/linuxdeepin/gio-qt
 
@@ -20,18 +21,18 @@ Conflicts: libgio-qt0
 Replaces: libgio-qt0
 Depends: ${shlibs:Depends}, ${misc:Depends}, libglibmm-2.4-1v5
 Description: Gio wrapper for Qt.
- A convenient way to bind gio with Qt5.
+ A convenient way to bind gio with either Qt5 or Qt6.
 
 Package: libgio-qt-dev
 Architecture: any
 Section: libdevel
 Depends: libgio-qt, ${misc:Depends}, libglibmm-2.4-dev
 Description: Development package for libgio-qt.
- A convenient way to bind gio with Qt5.
+ A convenient way to bind gio with either Qt5 or Qt6.
 
 Package: libgio-qt-doc
 Architecture: any
 Section: doc
 Depends: ${misc:Depends}
 Description: Gio wrapper for Qt (documentation)
- A convenient way to bind gio with Qt5.
+ A convenient way to bind gio with either Qt5 or Qt6.

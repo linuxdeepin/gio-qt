@@ -1,3 +1,5 @@
+find_package(Qt6 REQUIRED COMPONENTS Test)
+
 enable_testing ()
 
 function(DGIO_CREATE_TEST _generated_target_name _input_file_name _use_giomm)
