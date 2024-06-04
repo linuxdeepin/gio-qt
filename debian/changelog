@@ -1,3 +1,9 @@
+gio-qt (0.0.13) unstable; urgency=medium
+
+  * add support for Qt6
+
+ -- ut003880 <zhangtianyi@uniontech.com>  Tue, 4 Jun 2024 17:15:29 +0800
+
 gio-qt (0.0.12) unstable; urgency=medium
 
   * update changelog.
