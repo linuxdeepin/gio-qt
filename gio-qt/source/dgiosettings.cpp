@@ -179,7 +179,7 @@ public:
         return false;
     }
 
-    bool inlcudeKey(const gchar* gkey) const {
+    bool includeKey(const gchar* gkey) const {
         gchar **allKeys = g_settings_list_keys(settings);
         bool ret = strvHasString (allKeys, gkey);
         g_strfreev (allKeys);
@@ -190,7 +190,7 @@ public:
     QVariant value(GSettings* gsettings, const QString& key) const {
         gchar* gkey = DGioPrivate::converToGChar(key.toUtf8());
 
-        if(!inlcudeKey(gkey)) {
+        if(!includeKey(gkey)) {
             g_free(gkey);
             return QVariant();
         }
@@ -207,7 +207,7 @@ public:
     {
         gchar* gkey = DGioPrivate::converToGChar(key.toUtf8());
 
-        if(!inlcudeKey(gkey)) {
+        if(!includeKey(gkey)) {
             g_free(gkey);
             return false;
         }
