@@ -205,9 +205,12 @@ public:
 
     bool trySet(const QString& key, const QVariant& value)
     {
-        const gchar* gkey = key.toUtf8().constData();
+        gchar* gkey = DGioPrivate::converToGChar(key.toUtf8());
 
-        if(!inlcudeKey(gkey)) return false;
+        if(!inlcudeKey(gkey)) {
+            g_free(gkey);
+            return false;
+        }
 
         bool success = false;
 
@@ -221,6 +224,7 @@ public:
         }
 
         g_variant_unref(cur);
+        g_free(gkey);
 
         return success;
     }
