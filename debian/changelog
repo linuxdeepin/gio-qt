@@ -1,3 +1,9 @@
+gio-qt (0.0.14) unstable; urgency=medium
+
+  * fix: crash when calling DGioSettings::setValue
+
+ -- ut003880 <zhangtianyi@uniontech.com>  Mon, 17 Jun 2024 21:14:25 +0800
+
 gio-qt (0.0.13) unstable; urgency=medium
 
   * add support for Qt6
