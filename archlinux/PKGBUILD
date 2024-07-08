@@ -1,13 +1,13 @@
 # Maintainer: Dingyuan Zhang <lxz@mkacg.com>
 
 pkgname=gio-qt-git
-pkgver=0.0.11
+pkgver=0.0.14
 pkgrel=1
 pkgdesc='Gio wrapper for Qt applications'
 arch=('x86_64')
 url="https://github.com/linuxdeepin/gio-qt"
 license=('LGPL3')
-depends=('glibmm' 'qt5-base')
+depends=('glibmm' 'qt5-base' 'qt6-base')
 conflicts=('gio-qt')
 provides=('gio-qt')
 group=('deepin-git')
