@@ -1,8 +1,10 @@
-gio-qt (0.0.16) UNRELEASED; urgency=medium
+gio-qt (0.0.16) unstable; urgency=medium
 
   * Merge packaging.
+  * Bump version to 0.0.16 in archlinux/PKGBUILD and CMakeLists.txt.
+  * Declare Breaks and Replaces against libgio-qt (<= 0.0.14).
 
- -- Tianyu Chen <sweetyfish@deepin.org>  Thu, 21 Aug 2025 17:11:35 +0800
+ -- Tianyu Chen <sweetyfish@deepin.org>  Thu, 21 Aug 2025 17:46:22 +0800
 
 gio-qt (0.0.15-2deepin1) unstable; urgency=medium
 
