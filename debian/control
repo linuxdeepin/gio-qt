@@ -36,19 +36,6 @@ Description: Gio wrapper for Qt (development files)
  .
  This package is part of DDE (Deepin Desktop Environment).
 
-Package: libgio-qt-doc
-Section: doc
-Architecture: all
-Multi-Arch: foreign
-Depends:
- ${misc:Depends},
-Description: Gio wrapper for Qt (documentation files)
- Gio-qt provides Gio wrapper for Qt.
- .
- This package provides the library documentation files.
- .
- This package is part of DDE (Deepin Desktop Environment).
-
 Package: libgio-qt0
 Architecture: any
 Multi-Arch: same
