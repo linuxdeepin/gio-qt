@@ -1,7 +1,7 @@
 # Maintainer: Dingyuan Zhang <lxz@mkacg.com>
 
 pkgname=gio-qt-git
-pkgver=0.0.14
+pkgver=0.0.16
 pkgrel=1
 pkgdesc='Gio wrapper for Qt applications'
 arch=('x86_64')

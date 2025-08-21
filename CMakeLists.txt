@@ -8,7 +8,7 @@ option(BUILD_DOCS "Build documentation" ON)
 
 # Version
 if (NOT PROJECT_VERSION)
-    set(PROJECT_VERSION "0.0.1")
+    set(PROJECT_VERSION "0.0.16")
 endif()
 
 if (NOT PROJECT_VERSION_MAJOR)
