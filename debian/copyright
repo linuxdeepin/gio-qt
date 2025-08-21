@@ -6,6 +6,10 @@ Files: *
 Copyright: 2019-2019 Deepin Technology Co., Ltd.
 License: LGPL-3+
 
+Files: debian/*
+Copyright: 2020 Arun Kumar Pariyar <openarungeek@gmail.com>
+License: Expat
+
 License: LGPL-3+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU Lesser General Public License as published by

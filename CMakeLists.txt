@@ -52,7 +52,7 @@ if (BUILD_DOCS)
     set (DOXYGEN_EXCLUDE_SYMBOLS "*Private;*Test")
     set (DOXYGEN_QHG_LOCATION "qhelpgenerator")
     set (DOXYGEN_QHP_NAMESPACE "org.deepin.gio-qt")
-    set (DOXYGEN_QCH_FILE "../gio-qt.qch")
+    #set (DOXYGEN_QCH_FILE "../gio-qt.qch")
     set (DOXYGEN_QHP_VIRTUAL_FOLDER "gio-qt")
 
     doxygen_add_docs(doxygen
@@ -62,7 +62,7 @@ if (BUILD_DOCS)
         COMMENT "Generate documentation via Doxygen"
     )
 
-    install (FILES ${CMAKE_CURRENT_BINARY_DIR}/docs/gio-qt.qch DESTINATION share/qt5/doc)
+    #install (FILES ${CMAKE_CURRENT_BINARY_DIR}/docs/gio-qt.qch DESTINATION share/qt5/doc)
 else ()
     message (STATUS "")
     message (STATUS "To build docs, please use -DBUILD_DOCS=Yes")
